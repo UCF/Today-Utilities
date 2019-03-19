@@ -11,3 +11,5 @@ GitHub Plugin URI: UCF/Today-Utilities
 if ( ! defined( 'WPINC' ) ) {
     die;
 }
+
+require_once 'includes/today-utilities-admin.php';
