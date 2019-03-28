@@ -209,7 +209,24 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		 * @return WP_REST_Response
 		 */
 		public static function get_mainsite_stories( $request ) {
+			$stories = get_fields( 'main_site_news_feed' );
 
+			$args = array(
+				'post__in' => $stories['main_site_stories']
+			);
+
+			$posts = get_posts( $args );
+
+			$controller = new WP_REST_Posts_Controller( 'post' );
+
+			$retval = array();
+
+			foreach ( $posts as $post ) {
+				$data = $controller->prepare_item_for_response( $post, $request );
+				$retval[] = $controller->prepare_response_for_collection( $data );
+			}
+
+			return new WP_REST_Response( $retval, 200 );
 		}
 	}
 }
