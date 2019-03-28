@@ -210,13 +210,26 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		 */
 		public static function get_mainsite_stories( $request ) {
 			$stories = get_fields( 'main_site_news_feed' );
+			$args = array();
 
-			$args = array(
-				'post__in' => $stories['main_site_stories']
-			);
+			if ( isset( $stories['main_site_stories'] ) &&
+				 is_array( $stories['main_site_stories'] ) &&
+				 count( $stories['main_site_stories'] ) > 0 ) {
+
+				$args = array(
+					'post__in' => $stories['main_site_stories']
+				);
+			} else {
+				// TODO: Figure out what our fallback is
+				$args = array(
+					'posts_per_page' => 5,
+				);
+			}
 
 			$posts = get_posts( $args );
 
+			// Use the post controller so we can tie into already set
+			// formats and filters.
 			$controller = new WP_REST_Posts_Controller( 'post' );
 
 			$retval = array();
