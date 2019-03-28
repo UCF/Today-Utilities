@@ -20,18 +20,14 @@ function tu_add_main_site_feed_options_page() {
 
 function tu_post_get_thumbnail( $object, $field_name, $request ) {
 	$image = null;
-	if ( $object['featured_media'] ) {
-		$image = wp_get_attachment_image_src( $object['featured_media'] );
-	} else {
-		$attachments = get_attached_media( 'image', $object['id'] );
-		if ( $attachments ) {
-			foreach( $attachments as $key=>$val ) {
-				if ( $image = wp_get_attachment_image_src( $key ) ) {
-					break;
-				}
-			}
+
+	if ( function_exists( 'today_get_thumbnail_id' ) ) {
+		$image_id = today_get_thumbnail_id( $object['id'] );
+		if ( $image_id ) {
+			$image = wp_get_attachment_image_src( $image_id );
 		}
 	}
+
 	return is_array( $image ) ? $image[0] : null;
 }
 
