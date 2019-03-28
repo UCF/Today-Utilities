@@ -14,6 +14,7 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once 'includes/today-utilities-admin.php';
 require_once 'includes/today-gmucf-options.php';
+require_once 'includes/today-main-site-feed-options.php';
 
 require_once 'api/today-custom-post-api.php';
 
@@ -23,6 +24,7 @@ if ( ! function_exists( 'tu_init' ) ) {
 
 		// Add options pages.
 		add_action( 'init', 'tu_add_gmucf_options_page' );
+		add_action( 'init', 'tu_add_main_site_feed_options_page' );
 	}
 
 	add_action( 'plugins_loaded', 'tu_init', 10, 0 );

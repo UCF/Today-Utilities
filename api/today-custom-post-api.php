@@ -7,7 +7,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 	class UCF_Today_Custom_API extends WP_REST_Controller {
 		/**
 		 * Registers the rest routes for the ucf_news api
-		 * @since 2.8.0
+		 * @since 1.0.0
 		 * @author Jim Barnes
 		 */
 		public static function register_rest_routes() {
@@ -30,11 +30,19 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' )
 				)
 			) );
+
+			register_rest_route( "{$root}/{$version}", "/main-site-stories", array(
+				array(
+					'methods'              => WP_REST_Server::READABLE,
+					'callback'             => array( 'UCF_Today_Custom_API', 'get_mainsite_stories' ),
+					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_persmissions' )
+				)
+			) );
 		}
 
 		/**
 		 * Gets the external stories
-		 * @since 2.8.0
+		 * @since 1.0.0
 		 * @author Jim Barnes
 		 * @param WP_REST_Request $request | Contains GET params
 		 * @return WP_REST_Response
@@ -96,7 +104,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 		/**
 		 * Formats the external story for response
-		 * @since 2.8.0
+		 * @since 1.0.0
 		 * @author Jim Barnes
 		 * @param WP_Post $post The post
 		 * @param WP_REST_Request $request The request object
@@ -137,7 +145,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 		/**
 		 * Gets the default permissions
-		 * @since 2.8.0
+		 * @since 1.0.0
 		 * @author Jim Barnes
 		 */
 		public static function get_permissions() {
@@ -146,7 +154,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 		/**
 		 * Gets the allowable args for external stories
-		 * @since 2.8.0
+		 * @since 1.0.0
 		 * @author Jim Barnes
 		 */
 		public static function get_external_story_args() {
@@ -178,7 +186,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 		/**
 		 * Gets the GMUCF email options
-		 * @since 2.9.0
+		 * @since 1.0.0
 		 * @author Cadie
 		 * @param WP_REST_Request $request | Contains GET params
 		 * @return WP_REST_Response
@@ -188,6 +196,48 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 			$gmucf_content_rows            = $retval['gmucf_email_content'];
 			$retval['gmucf_email_content'] = gmucf_stories_default_values( $gmucf_content_rows );
+
+			return new WP_REST_Response( $retval, 200 );
+		}
+
+		/**
+		 * Gets the Main Site Stories set in the
+		 * EDU News Feed options page
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 * @param WP_REST_Request $request | Contains GET params
+		 * @return WP_REST_Response
+		 */
+		public static function get_mainsite_stories( $request ) {
+			$stories = get_fields( 'main_site_news_feed' );
+			$args = array();
+
+			if ( isset( $stories['main_site_stories'] ) &&
+				 is_array( $stories['main_site_stories'] ) &&
+				 count( $stories['main_site_stories'] ) > 0 ) {
+
+				$args = array(
+					'post__in' => $stories['main_site_stories']
+				);
+			} else {
+				// TODO: Figure out what our fallback is
+				$args = array(
+					'posts_per_page' => 5,
+				);
+			}
+
+			$posts = get_posts( $args );
+
+			// Use the post controller so we can tie into already set
+			// formats and filters.
+			$controller = new WP_REST_Posts_Controller( 'post' );
+
+			$retval = array();
+
+			foreach ( $posts as $post ) {
+				$data = $controller->prepare_item_for_response( $post, $request );
+				$retval[] = $controller->prepare_response_for_collection( $data );
+			}
 
 			return new WP_REST_Response( $retval, 200 );
 		}
