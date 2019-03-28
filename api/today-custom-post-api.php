@@ -30,6 +30,14 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' )
 				)
 			) );
+
+			register_rest_route( "{$root}/{$version}", "/main-site-stories", array(
+				array(
+					'methods'              => WP_REST_Server::READABLE,
+					'callback'             => array( 'UCF_Today_Custom_API', 'get_mainsite_stories' ),
+					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_persmissions' )
+				)
+			) );
 		}
 
 		/**
@@ -190,6 +198,18 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			$retval['gmucf_email_content'] = gmucf_stories_default_values( $gmucf_content_rows );
 
 			return new WP_REST_Response( $retval, 200 );
+		}
+
+		/**
+		 * Gets the Main Site Stories set in the
+		 * EDU News Feed options page
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 * @param WP_REST_Request $request | Contains GET params
+		 * @return WP_REST_Response
+		 */
+		public static function get_mainsite_stories( $request ) {
+
 		}
 	}
 }
