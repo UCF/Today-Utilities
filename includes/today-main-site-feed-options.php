@@ -38,7 +38,7 @@ function tu_post_get_thumbnail( $object, $field_name, $request ) {
 function add_image_to_post_feed() {
 	register_rest_field( 'post', 'thumbnail',
 		array(
-			'get_callback' => 'post_get_thumbnail',
+			'get_callback' => 'tu_post_get_thumbnail',
 			'schema'       => null,
 		)
 	);
