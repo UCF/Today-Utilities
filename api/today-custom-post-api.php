@@ -30,6 +30,14 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' )
 				)
 			) );
+
+			register_rest_route( "{$root}/{$version}", "/main-site-stories", array(
+				array(
+					'methods'              => WP_REST_Server::READABLE,
+					'callback'             => array( 'UCF_Today_Custom_API', 'get_mainsite_stories' ),
+					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_persmissions' )
+				)
+			) );
 		}
 
 		/**
@@ -188,6 +196,48 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 			$gmucf_content_rows            = $retval['gmucf_email_content'];
 			$retval['gmucf_email_content'] = gmucf_stories_default_values( $gmucf_content_rows );
+
+			return new WP_REST_Response( $retval, 200 );
+		}
+
+		/**
+		 * Gets the Main Site Stories set in the
+		 * EDU News Feed options page
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 * @param WP_REST_Request $request | Contains GET params
+		 * @return WP_REST_Response
+		 */
+		public static function get_mainsite_stories( $request ) {
+			$stories = get_fields( 'main_site_news_feed' );
+			$args = array();
+
+			if ( isset( $stories['main_site_stories'] ) &&
+				 is_array( $stories['main_site_stories'] ) &&
+				 count( $stories['main_site_stories'] ) > 0 ) {
+
+				$args = array(
+					'post__in' => $stories['main_site_stories']
+				);
+			} else {
+				// TODO: Figure out what our fallback is
+				$args = array(
+					'posts_per_page' => 5,
+				);
+			}
+
+			$posts = get_posts( $args );
+
+			// Use the post controller so we can tie into already set
+			// formats and filters.
+			$controller = new WP_REST_Posts_Controller( 'post' );
+
+			$retval = array();
+
+			foreach ( $posts as $post ) {
+				$data = $controller->prepare_item_for_response( $post, $request );
+				$retval[] = $controller->prepare_response_for_collection( $data );
+			}
 
 			return new WP_REST_Response( $retval, 200 );
 		}
