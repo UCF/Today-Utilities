@@ -4,13 +4,45 @@
         "title": "EDU News Feed Options",
         "fields": [
             {
+                "key": "field_5c9e37641bcbe",
+                "label": "Feed Mode",
+                "name": "main_site_stories_feed_config",
+                "type": "radio",
+                "instructions": "Choose which feed should be used.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "default": "Display the most recent stories with \"Promote on Main Site\" field set to true.",
+                    "custom": "Display a custom set of stories."
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "default",
+                "layout": "vertical",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
                 "key": "field_5c9e2f1d9c2c5",
                 "label": "Feed Expiration",
                 "name": "main_site_stories_expire",
                 "type": "date_picker",
                 "instructions": "Choose when the custom feed should expire.",
                 "required": 1,
-                "conditional_logic": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5c9e37641bcbe",
+                            "operator": "==",
+                            "value": "custom"
+                        }
+                    ]
+                ],
                 "wrapper": {
                     "width": "",
                     "class": "",
@@ -27,7 +59,15 @@
                 "type": "post_object",
                 "instructions": "Add stories to be displayed on www.ucf.edu.",
                 "required": 1,
-                "conditional_logic": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5c9e37641bcbe",
+                            "operator": "==",
+                            "value": "custom"
+                        }
+                    ]
+                ],
                 "wrapper": {
                     "width": "",
                     "class": "",
