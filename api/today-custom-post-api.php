@@ -227,8 +227,9 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				? $stories['main_site_stories']
 				: null;
 
-			if ( $config === 'custom' && $expiration && $today < $expiration && $story_ids )
+			if ( $config === 'custom' && $expiration && $today < $expiration && $story_ids ) {
 				$use_default = false;
+			}
 
 			// Make sure we don't need to flip back the config
 			if ( $use_default && $config === 'custom' ) {
