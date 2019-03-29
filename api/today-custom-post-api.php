@@ -210,19 +210,35 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		 */
 		public static function get_mainsite_stories( $request ) {
 			$stories = get_fields( 'main_site_news_feed' );
+			$use_default = true;
 			$args = array();
 
-			if ( isset( $stories['main_site_stories'] ) &&
-				 is_array( $stories['main_site_stories'] ) &&
-				 count( $stories['main_site_stories'] ) > 0 ) {
+			$expiration = isset( $stories['main_site_stories_expire'] )
+				? new DateTime( $stories['main_site_stories_expire'] )
+				: null;
 
-				$args = array(
-					'post__in' => $stories['main_site_stories']
-				);
-			} else {
-				// TODO: Figure out what our fallback is
+			$today = new DateTime('now');
+
+			$story_ids = isset( $stories['main_site_stories'] )
+				? $stories['main_site_stories']
+				: null;
+
+			if ( $expiration && $today < $expiration && $story_ids )
+				$use_default = false;
+
+			if ( $use_default ) {
 				$args = array(
 					'posts_per_page' => 5,
+					'meta_query'     => array(
+						array(
+							'key'   => 'post_main_site_story',
+							'value' => true
+						)
+					)
+				);
+			} else {
+				$args = array(
+					'post__in' => $stories['main_site_stories']
 				);
 			}
 
