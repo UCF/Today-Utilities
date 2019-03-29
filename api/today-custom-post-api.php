@@ -213,6 +213,10 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			$use_default = true;
 			$args = array();
 
+			$config = isset( $stories['main_site_stories_feed_config'] )
+				? $stories['main_site_stories_feed_config']
+				: 'default'; // Set to default in case there is no value
+
 			$expiration = isset( $stories['main_site_stories_expire'] )
 				? new DateTime( $stories['main_site_stories_expire'] )
 				: null;
@@ -223,8 +227,13 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				? $stories['main_site_stories']
 				: null;
 
-			if ( $expiration && $today < $expiration && $story_ids )
+			if ( $config === 'custom' && $expiration && $today < $expiration && $story_ids )
 				$use_default = false;
+
+			// Make sure we don't need to flip back the config
+			if ( $use_default && $config === 'custom' ) {
+				update_field( 'main_site_stories_feed_config', 'default', 'main_site_news_feed' );
+			}
 
 			if ( $use_default ) {
 				$args = array(
