@@ -210,19 +210,45 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		 */
 		public static function get_mainsite_stories( $request ) {
 			$stories = get_fields( 'main_site_news_feed' );
+			$use_default = true;
 			$args = array();
 
-			if ( isset( $stories['main_site_stories'] ) &&
-				 is_array( $stories['main_site_stories'] ) &&
-				 count( $stories['main_site_stories'] ) > 0 ) {
+			$config = isset( $stories['main_site_stories_feed_config'] )
+				? $stories['main_site_stories_feed_config']
+				: 'default'; // Set to default in case there is no value
 
-				$args = array(
-					'post__in' => $stories['main_site_stories']
-				);
-			} else {
-				// TODO: Figure out what our fallback is
+			$expiration = isset( $stories['main_site_stories_expire'] )
+				? new DateTime( $stories['main_site_stories_expire'] )
+				: null;
+
+			$today = new DateTime('now');
+
+			$story_ids = isset( $stories['main_site_stories'] )
+				? $stories['main_site_stories']
+				: null;
+
+			if ( $config === 'custom' && $expiration && $today < $expiration && $story_ids ) {
+				$use_default = false;
+			}
+
+			// Make sure we don't need to flip back the config
+			if ( $use_default && $config === 'custom' ) {
+				update_field( 'main_site_stories_feed_config', 'default', 'main_site_news_feed' );
+			}
+
+			if ( $use_default ) {
 				$args = array(
 					'posts_per_page' => 5,
+					'meta_query'     => array(
+						array(
+							'key'   => 'post_main_site_story',
+							'value' => true
+						)
+					)
+				);
+			} else {
+				$args = array(
+					'post__in' => $stories['main_site_stories']
 				);
 			}
 
