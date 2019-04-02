@@ -22,7 +22,7 @@ function tu_post_get_thumbnail( $object, $field_name, $request ) {
 	$image = null;
 
 	if ( function_exists( 'today_get_thumbnail_url' ) ) {
-		$image = today_get_thumbnail_url( $object['id'], 'thumbnail', false ) ?: null;
+		$image = today_get_thumbnail_url( $object['id'], 'medium', false ) ?: null;
 	}
 
 	return $image;
