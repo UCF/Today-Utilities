@@ -21,14 +21,11 @@ function tu_add_main_site_feed_options_page() {
 function tu_post_get_thumbnail( $object, $field_name, $request ) {
 	$image = null;
 
-	if ( function_exists( 'today_get_thumbnail_id' ) ) {
-		$image_id = today_get_thumbnail_id( $object['id'] );
-		if ( $image_id ) {
-			$image = wp_get_attachment_image_src( $image_id );
-		}
+	if ( function_exists( 'today_get_thumbnail_url' ) ) {
+		$image = today_get_thumbnail_url( $object['id'], 'medium', false ) ?: null;
 	}
 
-	return is_array( $image ) ? $image[0] : null;
+	return $image;
 }
 
 function add_image_to_post_feed() {
