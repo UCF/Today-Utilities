@@ -35,7 +35,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				array(
 					'methods'              => WP_REST_Server::READABLE,
 					'callback'             => array( 'UCF_Today_Custom_API', 'get_mainsite_stories' ),
-					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_persmissions' )
+					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' )
 				)
 			) );
 		}
