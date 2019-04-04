@@ -60,9 +60,16 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 			// Initialize and set defaults on argument array
 			$args = array(
-				'post_type'      => 'externalstory',
+				'post_type'      => 'ucf_resource_link',
 				'posts_per_page' => $limit,
-				'offset'         => $offset
+				'offset'         => $offset,
+				'tax_query'      => array(
+					array(
+						'taxonomy' => 'resource_link_types',
+						'field'    => 'slug',
+						'terms'    => 'external-story'
+					)
+				)
 			);
 
 			// Add search if it's set
@@ -74,18 +81,11 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			if ( $source ) {
 				$sources = explode( ',', $source );
 
-				$args['meta_query'] = array();
-
-				foreach ( $sources as $source ) {
-					$args['meta_query'][] = array(
-						'key'   => 'externalstory_source',
-						'value' => $source
-					);
-				}
-
-				if ( count( $args['meta_query'] ) > 1 ) {
-					$args['meta_query']['relation'] = 'OR';
-				}
+				$args['tax_query'][] = array(
+					'taxonomy' => 'sources',
+					'field'    => 'slug',
+					'terms'    => $sources
+				);
 			}
 
 			if ( $categories ) {
@@ -113,9 +113,9 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		private static function prepare_external_story_for_response( $post, $request ) {
 
 			$terms = wp_get_post_terms( $post->ID, 'sources' );
-			$field = ( !empty( $terms ) ) ? get_field( 'news_source_image', $terms[0] ) : null;
-			$source_image = ( !empty( $field ) ) ? $field['url'] : null;
-			$source_name = wp_get_post_terms( $post->ID, 'sources' );
+			$source_name = ! empty( $terms ) ? $terms[0]->name : null;
+			$field = ( !empty( $terms ) ) ? get_field( 'source_icon', $terms[0] ) : null;
+			$source_image = ( !empty( $field ) ) ? $field : null;
 
 			// Prepare the return value format
 			$retval = array(
@@ -131,11 +131,11 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			);
 
 			$retval['title']        = $post->post_title;
-			$retval['link_text']    = get_post_meta( $post->ID, 'externalstory_text', true );
-			$retval['description']  = get_post_meta( $post->ID, 'externalstory_description', true );
-			$retval['url']          = get_post_meta( $post->ID, 'externalstory_url', true );
-			$retval['source']       = get_post_meta( $post->ID, 'externalstory_source', true );
-			$retval['source_name']  = ( !empty( $source_name ) ) ? $source_name[0]->name : null;
+			$retval['link_text']    = $post->post_title;
+			$retval['description']  = get_post_meta( $post->ID, 'ucf_resource_link_description', true );
+			$retval['url']          = get_post_meta( $post->ID, 'ucf_resource_link_url', true );
+			$retval['source']       = $source_name;
+			$retval['source_name']  = $source_name;
 			$retval['source_image'] = $source_image;
 			$retval['publish_date'] = $post->post_date;
 			$retval['categories']   = wp_get_post_categories( $post->ID, array( 'fields' => 'names' ) );
