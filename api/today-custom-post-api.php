@@ -126,8 +126,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				'source'       => '',
 				'source_name'  => '',
 				'source_image' => '',
-				'publish_date' => '',
-				'categories'   => array()
+				'publish_date' => ''
 			);
 
 			$retval['title']        = $post->post_title;
@@ -138,7 +137,6 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			$retval['source_name']  = $source_name;
 			$retval['source_image'] = $source_image;
 			$retval['publish_date'] = $post->post_date;
-			$retval['categories']   = wp_get_post_categories( $post->ID, array( 'fields' => 'names' ) );
 
 			return $retval;
 		}
