@@ -15,6 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 require_once 'includes/today-utilities-admin.php';
 require_once 'includes/today-gmucf-options.php';
 require_once 'includes/today-main-site-feed-options.php';
+require_once 'includes/today-revisions.php';
 
 require_once 'api/today-custom-post-api.php';
 
