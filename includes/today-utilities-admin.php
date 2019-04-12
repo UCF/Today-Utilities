@@ -74,6 +74,7 @@ function tu_configure_tinymce( $in ) {
 function(plugin, args) {
 	var whitelist = [
 		'p', 'a',
+		'blockquote',
 		'strong', 'em',
 		'small', 'sup', 'sub',
 		's', 'ins', 'del', 'abbr',
@@ -81,15 +82,78 @@ function(plugin, args) {
 		'ul', 'li', 'ol',
 		'dl', 'dt', 'dd'
 	];
+
+	// Generic function that replaces a URL with a query param value
+	// based on specific search criteria in the URL
+	function stripLinkPrefix(url, searchRegex, queryParam) {
+		if (url.search(searchRegex) !== -1) {
+			var dummylink = document.createElement('a');
+			dummylink.href = url;
+			var query = dummylink.search;
+			var updatedUrl = '';
+			if (query.indexOf(queryParam + '=') !== -1) {
+				// Get the query param
+				updatedUrl = query.replace('?', '').split('&').filter(function(x) { var kv = x.split('='); if (kv[0] === queryParam) return kv[1]; } ).shift().split('=')[1];
+
+				// Decode special characters.
+				// This is dumb, but colon (:) characters don't get
+				// decoded properly without running decodeURIComponent()
+				// on the string twice
+				updatedUrl = decodeURIComponent(decodeURIComponent(updatedUrl));
+
+				url = updatedUrl;
+			}
+		}
+
+		return url;
+	}
+
+	// Replaces Outlook safelink URLs with the actual redirected URL
+	function stripOutlookSafelinks(url) {
+		return stripLinkPrefix(
+			url,
+			/^https\:\/\/(.*\.)safelinks\.protection\.outlook\.com\//i,
+			'url'
+		);
+	}
+
+	// Replaces Postmaster redirects with the actual redirected URL
+	function stripPostmasterRedirects(url) {
+		return stripLinkPrefix(
+			url,
+			/^https\:\/\/postmaster\.smca\.ucf\.edu\//i,
+			'url'
+		);
+	}
+
+	function sanitizeUrl(url) {
+		return stripPostmasterRedirects(stripOutlookSafelinks(url));
+	}
+
 	var clean = sanitizeHtml(args.content, {
 		allowedTags: whitelist,
 		transformTags: {
 			'b': 'strong',
-			'i': 'em'
+			'i': 'em',
+			'a': function(tagName, attribs) {
+				if (attribs.href) {
+					url = sanitizeUrl(attribs.href);
+					if (url !== attribs.href) {
+						attribs.href = url;
+					}
+				}
+
+				return {
+					tagName: tagName,
+					attribs: attribs
+				}
+			}
 		},
 		exclusiveFilter: function(frame) {
-			// Strip out empty tags
-			return !frame.text.trim();
+			return (
+				// Strip out empty tags
+				!frame.text.trim()
+			);
 		}
 	});
 
