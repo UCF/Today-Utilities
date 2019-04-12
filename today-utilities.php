@@ -12,6 +12,10 @@ if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
+define( 'TU_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'TU_PLUGIN_STATIC_URL', TU_PLUGIN_URL . 'static/' );
+define( 'TU_PLUGIN_JS_URL', TU_PLUGIN_STATIC_URL . 'js/' );
+
 require_once 'includes/today-utilities-admin.php';
 require_once 'includes/today-gmucf-options.php';
 require_once 'includes/today-main-site-feed-options.php';

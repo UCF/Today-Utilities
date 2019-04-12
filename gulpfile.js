@@ -120,6 +120,23 @@ function serverServe(done) {
 
 
 //
+// Installation of components/dependencies
+//
+
+// Copy sanitize-html script
+gulp.task('move-components-sanitizehtml', (done) => {
+  gulp.src([`${config.packagesPath}/sanitize-html/dist/sanitize-html.min.js`])
+    .pipe(gulp.dest(config.dist.jsPath));
+  done();
+});
+
+// Run all component-related tasks
+gulp.task('components', gulp.parallel(
+  'move-components-sanitizehtml'
+));
+
+
+//
 // CSS
 //
 
@@ -176,8 +193,8 @@ gulp.task('readme', () => {
 gulp.task('watch', (done) => {
   serverServe(done);
 
-  gulp.watch(`${config.src.scssPath}/**/*.scss`, gulp.series('css', serverReload));
-  gulp.watch(`${config.src.jsPath}/**/*.js`, gulp.series('js', serverReload));
+  // gulp.watch(`${config.src.scssPath}/**/*.scss`, gulp.series('css', serverReload));
+  // gulp.watch(`${config.src.jsPath}/**/*.js`, gulp.series('js', serverReload));
   gulp.watch('./**/*.php', gulp.series(serverReload));
 });
 
@@ -185,4 +202,5 @@ gulp.task('watch', (done) => {
 //
 // Default task
 //
-gulp.task('default', gulp.series('css', 'js', 'readme'));
+// gulp.task('default', gulp.series('components', 'css', 'js', 'readme'));
+gulp.task('default', gulp.series('components', 'readme'));
