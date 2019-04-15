@@ -4,6 +4,24 @@
  */
 
 /**
+ * Conditionally enqueues the sanitize-html lib on the
+ * post edit screen.
+ *
+ * @since 1.0.0
+ * @author Jo Dickson
+ */
+function tu_admin_enqueue_sanitizehtml( $hook ) {
+	if ( ! in_array( $hook, array( 'post-new.php', 'post.php' ) ) ) {
+		return;
+	}
+
+	wp_enqueue_script( 'tu_sanitizehtml', TU_PLUGIN_JS_URL . 'sanitize-html.min.js' );
+}
+
+add_action( 'admin_enqueue_scripts', 'tu_admin_enqueue_sanitizehtml' );
+
+
+/**
  * Defines new columns in the WordPress admin when viewing
  * all posts or searching for posts.
  *
@@ -11,8 +29,8 @@
  * @author Jo Dickson
  */
 function tu_custom_post_columns( $columns ) {
-    $columns['template'] = 'Template';
-    return $columns;
+	$columns['template'] = 'Template';
+	return $columns;
 }
 
 add_filter( 'manage_post_posts_columns', 'tu_custom_post_columns' );
@@ -26,14 +44,126 @@ add_filter( 'manage_post_posts_columns', 'tu_custom_post_columns' );
  * @author Jo Dickson
  */
 function tu_custom_post_columns_content( $column_name, $post_id ) {
-    switch ( $column_name ) {
+	switch ( $column_name ) {
 		case 'template':
 			$all_templates = get_page_templates( null, 'post' );
 			$template_slug = get_page_template_slug( $post_id );
 			$template_name = $template_slug ? array_search( $template_slug, $all_templates ) : 'Default';
 			echo $template_name;
 			break;
-    }
+	}
 }
 
 add_action( 'manage_post_posts_custom_column', 'tu_custom_post_columns_content', 10, 2 );
+
+
+/**
+ * Customizes TinyMCE's configuration.
+ *
+ * Adds a paste_preprocess rule that applies a whitelist of
+ * HTML elements and strips out empty tags.
+ *
+ * @since 1.0.0
+ * @author Jo Dickson
+ * @param array $in TinyMCE init config
+ * @return array TinyMCE init config
+ */
+function tu_configure_tinymce( $in ) {
+	ob_start();
+?>
+function(plugin, args) {
+	var whitelist = [
+		'p', 'a',
+		'blockquote',
+		'strong', 'em',
+		'small', 'sup', 'sub',
+		's', 'ins', 'del', 'abbr',
+		'h2', 'h3', 'h4', 'h5', 'h6',
+		'ul', 'li', 'ol',
+		'dl', 'dt', 'dd'
+	];
+
+	// Generic function that replaces a URL with a query param value
+	// based on specific search criteria in the URL
+	function stripLinkPrefix(url, searchRegex, queryParam) {
+		if (url.search(searchRegex) !== -1) {
+			var dummylink = document.createElement('a');
+			dummylink.href = url;
+			var query = dummylink.search;
+			var updatedUrl = '';
+			if (query.indexOf(queryParam + '=') !== -1) {
+				// Get the query param
+				updatedUrl = query.replace('?', '').split('&').filter(function(x) { var kv = x.split('='); if (kv[0] === queryParam) return kv[1]; } ).shift().split('=')[1];
+
+				// Decode special characters.
+				// This is dumb, but colon (:) characters don't get
+				// decoded properly without running decodeURIComponent()
+				// on the string twice
+				updatedUrl = decodeURIComponent(decodeURIComponent(updatedUrl));
+
+				url = updatedUrl;
+			}
+		}
+
+		return url;
+	}
+
+	// Replaces Outlook safelink URLs with the actual redirected URL
+	function stripOutlookSafelinks(url) {
+		return stripLinkPrefix(
+			url,
+			/^https\:\/\/(.*\.)safelinks\.protection\.outlook\.com\//i,
+			'url'
+		);
+	}
+
+	// Replaces Postmaster redirects with the actual redirected URL
+	function stripPostmasterRedirects(url) {
+		return stripLinkPrefix(
+			url,
+			/^https\:\/\/postmaster\.smca\.ucf\.edu\//i,
+			'url'
+		);
+	}
+
+	function sanitizeUrl(url) {
+		return stripPostmasterRedirects(stripOutlookSafelinks(url));
+	}
+
+	var clean = sanitizeHtml(args.content, {
+		allowedTags: whitelist,
+		transformTags: {
+			'b': 'strong',
+			'i': 'em',
+			'a': function(tagName, attribs) {
+				if (attribs.href) {
+					url = sanitizeUrl(attribs.href);
+					if (url !== attribs.href) {
+						attribs.href = url;
+					}
+				}
+
+				return {
+					tagName: tagName,
+					attribs: attribs
+				}
+			}
+		},
+		exclusiveFilter: function(frame) {
+			return (
+				// Strip out empty tags
+				!frame.text.trim()
+			);
+		}
+	});
+
+	// Return the clean HTML
+	args.content = clean;
+}
+<?php
+	$in['paste_preprocess'] = ob_get_clean();
+
+	return $in;
+}
+
+add_filter( 'tiny_mce_before_init', 'tu_configure_tinymce' );
