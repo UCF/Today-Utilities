@@ -167,3 +167,35 @@ function(plugin, args) {
 }
 
 add_filter( 'tiny_mce_before_init', 'tu_configure_tinymce' );
+
+
+/**
+ * Restrict the size of images uploaded to the media library.
+ *
+ * https://wordpress.stackexchange.com/a/228306
+ *
+ * @since 1.0.0
+ * @author Jo Dickson
+ * @param array $file The uploaded file information
+ * @return array The uploaded file information
+ */
+function tu_handle_upload_prefilter( $file ) {
+	// Set the desired file size limit per mimetype (in KB)
+	$filesize_limits = array(
+		'image/jpeg' => 800,
+		'image/png'  => 800,
+	);
+
+	if ( isset( $file['type'] ) && array_key_exists( $file['type'], $filesize_limits ) ) {
+		$filesize_limit = $filesize_limits[$file['type']];
+		$current_size   = isset( $file['size'] ) ? $file['size'] / 1024 : 0; // get size in KB
+
+		if ( $current_size > $filesize_limit ) {
+			$file['error'] = sprintf( __( 'ERROR: File size limit for this type of file is %d KB.' ), $filesize_limit );
+		}
+	}
+
+    return $file;
+}
+
+add_filter( 'wp_handle_upload_prefilter', 'tu_handle_upload_prefilter', 10, 1 );
