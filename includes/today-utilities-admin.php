@@ -176,6 +176,8 @@ add_filter( 'tiny_mce_before_init', 'tu_configure_tinymce' );
  *
  * @since 1.0.0
  * @author Jo Dickson
+ * @param array $file The uploaded file information
+ * @return array The uploaded file information
  */
 function tu_handle_upload_prefilter( $file ) {
 	// Set the desired file size limit per mimetype (in KB)
