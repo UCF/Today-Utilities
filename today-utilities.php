@@ -17,8 +17,9 @@ define( 'TU_PLUGIN_STATIC_URL', TU_PLUGIN_URL . 'static/' );
 define( 'TU_PLUGIN_JS_URL', TU_PLUGIN_STATIC_URL . 'js/' );
 
 require_once 'includes/today-utilities-admin.php';
-require_once 'includes/today-gmucf-options.php';
-require_once 'includes/today-main-site-feed-options.php';
+require_once 'includes/today-options-gmucf.php';
+require_once 'includes/today-options-main-site-feed.php';
+require_once 'includes/today-feeds.php';
 require_once 'includes/today-revisions.php';
 
 require_once 'api/today-custom-post-api.php';
