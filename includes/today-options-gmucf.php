@@ -30,9 +30,9 @@ function tu_add_gmucf_options_page() {
 function gmucf_replace_story_default_values( $story ) {
 	$post_id = $story['gmucf_story'];
 	if ( ! $story['gmucf_story_image'] ) {
-		$story['gmucf_story_image'] = tu_post_get_thumbnail( $post_id, 'gmucf_top_story' );
+		$story['gmucf_story_image'] = today_get_thumbnail_url( $post_id, 'medium' );
 	} else {
-		$story['gmucf_story_image'] = $story['gmucf_story_image']['sizes']['gmucf_top_story'];
+		$story['gmucf_story_image'] = $story['gmucf_story_image']['sizes']['medium'];
 	}
 	if ( ! $story['gmucf_story_title'] ) {
 		$story['gmucf_story_title'] = get_the_title( $post_id );
