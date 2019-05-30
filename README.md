@@ -15,6 +15,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.0.1 ###
+Bug Fixes:
+* Updated feed to output image size which is valid.
+
 ### 1.0.0 ###
 * Initial release
 
