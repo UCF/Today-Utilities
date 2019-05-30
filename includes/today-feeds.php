@@ -58,7 +58,7 @@ add_action( 'rest_api_init', 'tu_add_image_to_post_feed' );
 function tu_post_get_post_author_name( $object, $field_name, $request ) {
 	$author_name = get_the_author_meta( 'display_name', $object['author'] );
 
-	$author_byline = get_field( 'post_author_byline', $post );
+	$author_byline = get_field( 'post_author_byline', $object['id'] );
 	if ( $author_byline ) {
 		$author_name = $author_byline;
 	}
