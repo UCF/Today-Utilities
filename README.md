@@ -15,6 +15,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.0.3 ###
+Bug Fixes:
+* Added missing support for `category_slugs` and `tag_slugs params` in REST API results for posts.  Necessary for compatiblity with the UCF News plugin.
+
 ### 1.0.2 ###
 Bug Fixes:
 * Updated `tu_add_author_byline_to_post_feed` function to use proper parameter.
