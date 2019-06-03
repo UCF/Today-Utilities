@@ -30,9 +30,9 @@ function tu_add_gmucf_options_page() {
 function gmucf_replace_story_default_values( $story ) {
 	$post_id = $story['gmucf_story'];
 	if ( ! $story['gmucf_story_image'] ) {
-		$story['gmucf_story_image'] = get_the_post_thumbnail_url( $post_id, 'gmucf_top_story' );
+		$story['gmucf_story_image'] = today_get_thumbnail_url( $post_id, 'medium_large' );
 	} else {
-		$story['gmucf_story_image'] = $story['gmucf_story_image']['sizes']['gmucf_top_story'];
+		$story['gmucf_story_image'] = $story['gmucf_story_image']['sizes']['medium_large'];
 	}
 	if ( ! $story['gmucf_story_title'] ) {
 		$story['gmucf_story_title'] = get_the_title( $post_id );
@@ -80,3 +80,81 @@ function gmucf_stories_default_values( $stories ) {
 	}
 	return $retval;
 }
+
+/**
+ * Adds GMUCF Field Section
+ * @author Jim Barnes
+ * @since 1.0.2
+ * @param WP_Customize $wp_customize Customizer class
+ */
+function tu_customizer_sections( $wp_customize ) {
+	$wp_customize->add_section(
+		'tu_gmucf_section',
+		array(
+			'title' => 'GMUCF Settings'
+		)
+	);
+}
+
+add_action( 'customize_register', 'tu_customizer_sections', 10, 1 );
+
+/**
+ * Adds GMUCF Fields
+ * @author Jim Barnes
+ * @since 1.0.2
+ * @param WP_Customize $wp_customize Customizer class
+ */
+function tu_customizer_fields( $wp_customize ) {
+	$wp_customize->add_setting(
+		'today_announcements_feed_url',
+		array(
+			'default' => 'https://www.ucf.edu/announcements/api/announcements/?time=this-week&exclude_ongoing=True&format=json&status=Publish'
+		)
+	);
+
+	$wp_customize->add_control(
+		'today_announcements_feed_url',
+		array(
+			'type'        => 'text',
+			'label'       => 'Announcements JSON URL',
+			'description' => 'The URL of the announcements JSON feed',
+			'section'     => 'tu_gmucf_section'
+		)
+	);
+}
+
+add_action( 'customize_register', 'tu_customizer_fields', 10, 1 );
+
+/**
+ * Adds announcements as options to gmucf_announcements field
+ * @author Jim Barnes
+ * @since 1.0.2
+ * @param array $field The ACF field
+ * @return array
+ */
+function tu_load_announcement_choices( $field ) {
+	$field['choices'] = array();
+
+	$url = get_theme_mod( 'today_announcements_feed_url', 'https://www.ucf.edu/announcements/api/announcements/?time=this-week&exclude_ongoing=True&format=json&status=Publish' );
+
+	$args = array(
+		'timeout' => 15
+	);
+
+	$response      = wp_remote_get( $url, $args );
+
+	$response_code = wp_remote_retrieve_response_code( $response );
+
+	if ( is_array( $response ) && is_int( $response_code ) && $response_code < 400 ) {
+
+		$results = json_decode( wp_remote_retrieve_body( $response ) );
+
+		foreach( $results as $result ) {
+			$field['choices'][$result->id] = $result->title;
+		}
+	}
+
+	return $field;
+}
+
+add_filter( 'acf/load_field/name=gmucf_announcements', 'tu_load_announcement_choices' );

@@ -15,6 +15,15 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.0.2 ###
+Bug Fixes:
+* Updated `tu_add_author_byline_to_post_feed` function to use proper parameter.
+* Added GMUCF Announcements feed logic and customizer option.
+
+### 1.0.1 ###
+Bug Fixes:
+* Updated feed to output image size which is valid.
+
 ### 1.0.0 ###
 * Initial release
 
