@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 4.9.7
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.0.3 =
+Bug Fixes:
+* Added missing support for `category_slugs` and `tag_slugs params` in REST API results for posts.  Necessary for compatiblity with the UCF News plugin.
 
 = 1.0.2 =
 Bug Fixes:
