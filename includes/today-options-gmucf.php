@@ -70,7 +70,7 @@ function gmucf_stories_default_values( $stories ) {
 			unset( $story['gmucf_right_featured_story'] );
 			$retval[] = $story;
 		} elseif ( $story['acf_fc_layout'] === 'gmucf_spotlight' ) {
-			$story['gmucf_spotlight_image'] = $story['gmucf_spotlight_image']['sizes']['gmucf_top_story'];
+			$story['gmucf_spotlight_image'] = $story['gmucf_spotlight_image']['sizes']['medium_large'];
 			$story['gmucf_layout']          = $story['acf_fc_layout'];
 			unset( $story['acf_fc_layout'] );
 			$retval[] = $story;
