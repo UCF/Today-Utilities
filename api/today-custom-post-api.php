@@ -260,6 +260,10 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 			$request['include'] = $ids;
 
+			if ( isset( $request['per_page'] ) && ! isset( $request['page'] ) ) {
+				$request['page'] = 1;
+			}
+
 			// Use the post controller so we can tie into already set
 			// formats and filters.
 			$controller = new WP_REST_Posts_Controller( 'post' );
