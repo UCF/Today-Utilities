@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 4.9.7
-Stable tag: 1.0.3
+Stable tag: 1.0.5
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,14 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.0.5 =
+Bug Fixes:
+* Added default posts API parameters to the main-site-stories endpoint.
+
+= 1.0.4 =
+Bug Fixes:
+* Updated the image size used for spotlight images.
 
 = 1.0.3 =
 Bug Fixes:
