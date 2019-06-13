@@ -35,7 +35,8 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				array(
 					'methods'              => WP_REST_Server::READABLE,
 					'callback'             => array( 'UCF_Today_Custom_API', 'get_mainsite_stories' ),
-					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' )
+					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' ),
+					'args'                 => array( 'WP_REST_Post_Controller', 'get_collection_params' )
 				)
 			) );
 		}
@@ -236,34 +237,42 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 			if ( $use_default ) {
 				$args = array(
-					'posts_per_page' => 5,
-					'meta_query'     => array(
+					'meta_query' => array(
 						array(
-							'key'   => 'post_main_site_story',
-							'value' => true
+							'key'     => 'post_main_site_story',
+							'value'   => "1",
+							'compare' => '='
 						)
 					)
 				);
 			} else {
 				$args = array(
-					'post__in' => $stories['main_site_stories']
+					'post__in' => $stories['main-site_stories']
 				);
 			}
 
-			$posts = get_posts( $args );
+			$query = new WP_Query( $args );
+			$ids = array();
+
+			foreach( $query->posts as $post ) {
+				$ids[] = $post->ID;
+			}
+
+			$request['include'] = $ids;
 
 			// Use the post controller so we can tie into already set
 			// formats and filters.
 			$controller = new WP_REST_Posts_Controller( 'post' );
 
+			$posts = $controller->get_items( $request );
+
 			$retval = array();
 
 			foreach ( $posts as $post ) {
-				$data = $controller->prepare_item_for_response( $post, $request );
-				$retval[] = $controller->prepare_response_for_collection( $data );
+				$retval[] = $controller->prepare_response_for_collection( $post );
 			}
 
-			return new WP_REST_Response( $retval, 200 );
+			return new WP_REST_Response( $retval[0], 200 );
 		}
 	}
 }
