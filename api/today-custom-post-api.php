@@ -247,7 +247,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				);
 			} else {
 				$args = array(
-					'post__in' => $stories['main-site_stories']
+					'post__in' => $stories['main_site_stories']
 				);
 			}
 
