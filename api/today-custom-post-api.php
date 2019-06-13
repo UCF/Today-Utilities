@@ -237,6 +237,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 			if ( $use_default ) {
 				$args = array(
+					'fields'     => 'ids',
 					'meta_query' => array(
 						array(
 							'key'     => 'post_main_site_story',
@@ -247,18 +248,14 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				);
 			} else {
 				$args = array(
+					'fields'   => 'ids',
 					'post__in' => $stories['main_site_stories']
 				);
 			}
 
 			$query = new WP_Query( $args );
-			$ids = array();
 
-			foreach( $query->posts as $post ) {
-				$ids[] = $post->ID;
-			}
-
-			$request['include'] = $ids;
+			$request['include'] = $query->posts;
 
 			if ( isset( $request['per_page'] ) && ! isset( $request['page'] ) ) {
 				$request['page'] = 1;
