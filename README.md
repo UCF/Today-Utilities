@@ -15,6 +15,14 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.0.5 ###
+Bug Fixes:
+* Added default posts API parameters to the main-site-stories endpoint.
+
+### 1.0.4 ###
+Bug Fixes:
+* Updated the image size used for spotlight images.
+
 ### 1.0.3 ###
 Bug Fixes:
 * Added missing support for `category_slugs` and `tag_slugs params` in REST API results for posts.  Necessary for compatiblity with the UCF News plugin.
