@@ -204,7 +204,7 @@ add_filter( 'wp_handle_upload_prefilter', 'tu_handle_upload_prefilter', 10, 1 );
 /**
  * Adds oEmbed support for Juxtapose.
  *
- * @since v1.0.3
+ * @since v1.0.6
  * @author Jo Dickson
  */
 wp_oembed_add_provider( 'https://cdn.knightlab.com/libs/juxtapose/latest/embed/*', 'https://oembed.knightlab.com/juxtapose/' );
