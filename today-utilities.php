@@ -2,7 +2,7 @@
 /*
 Plugin Name: Today Utilities
 Description: Feature and utility plugin for the UCF Today website
-Version: 1.0.5
+Version: 1.0.6
 Author: UCF Web Communications
 License: GPL3
 GitHub Plugin URI: UCF/Today-Utilities
