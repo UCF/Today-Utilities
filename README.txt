@@ -22,6 +22,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 == Changelog ==
 
+= 1.0.6 =
+Enhancements:
+* Added oEmbed support for Juxtapose embeds.
+
 = 1.0.5 =
 Bug Fixes:
 * Added default posts API parameters to the main-site-stories endpoint.
