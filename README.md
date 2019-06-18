@@ -15,6 +15,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.0.7 ###
+Bug Fixes:
+* Corrected PHP notice dealing with accessing an array index that was not set.
+
 ### 1.0.6 ###
 Enhancements:
 * Added oEmbed support for Juxtapose embeds.
