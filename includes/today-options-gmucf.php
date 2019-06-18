@@ -41,7 +41,7 @@ function gmucf_replace_story_default_values( $story ) {
 		$story['gmucf_story_description'] = get_post_meta( $post_id, 'promo', true );
 	}
 	$story['gmucf_story_permalink'] = get_permalink( $post_id );
-	if ( $story['acf_fc_layout'] ) {
+	if ( isset( $story['acf_fc_layout'] ) && ! empty( $story['acf_fc_layout'] ) ) {
 		$story['gmucf_layout'] = $story['acf_fc_layout'];
 		unset( $story['acf_fc_layout'] );
 	}
