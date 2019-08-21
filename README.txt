@@ -1,8 +1,8 @@
 === Today Utilities ===
 Contributors: ucfwebcom
 Requires at least: 4.9.7
-Tested up to: 4.9.7
-Stable tag: 1.0.7
+Tested up to: 5.2.2
+Stable tag: 1.0.8
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.0.8 =
+Bug Fixes:
+* Fixed undefined index 'paged' notice on main site stories feed.
 
 = 1.0.7 =
 Bug Fixes:
