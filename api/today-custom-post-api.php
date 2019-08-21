@@ -257,7 +257,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 			$request['include'] = $query->posts;
 
-			if ( isset( $request['per_page'] ) && ! isset( $request['page'] ) ) {
+			if ( ! isset( $request['page'] ) ) {
 				$request['page'] = 1;
 			}
 
