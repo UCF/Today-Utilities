@@ -15,6 +15,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.0.9 ###
+Documentation:
+* Updated contributing doc to reflect the switch from slack to teams.
+
 ### 1.0.8 ###
 Bug Fixes:
 * Fixed undefined index 'paged' notice on main site stories feed.

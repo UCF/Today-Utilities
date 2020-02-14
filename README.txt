@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 5.2.2
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.0.9 =
+Documentation:
+* Updated contributing doc to reflect the switch from slack to teams.
 
 = 1.0.8 =
 Bug Fixes:
