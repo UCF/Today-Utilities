@@ -15,6 +15,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.0.10 ###
+Enhancements:
+* Added primary category and tag to post REST API results
+
 ### 1.0.9 ###
 Documentation:
 * Updated contributing doc to reflect the switch from slack to teams.
