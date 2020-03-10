@@ -45,6 +45,96 @@ add_action( 'rest_api_init', 'tu_add_image_to_post_feed' );
 
 
 /**
+ * REST API callback function that returns a post's
+ * primary category ID (Yoast plugin feature) using logic from
+ * the Today Child Theme.
+ *
+ * @since 1.0.10
+ * @author Jo Dickson
+ * @param array $object Array of single feed object data
+ * @param string $field_name Name of the current field (in this case, 'primary_category')
+ * @param object $request WP_REST_Request object; contains details about the current request
+ * @return mixed WP_Term object, or null on failure
+ */
+function tu_post_get_primary_category( $object, $field_name, $request ) {
+	$primary = null;
+
+	if ( function_exists( 'today_get_primary_category' ) ) {
+		$post = get_post( $object['id'] );
+		if ( $cat = today_get_primary_category( $post ) ) {
+			$primary = $cat->term_id;
+		}
+	}
+
+	return $primary;
+}
+
+
+/**
+ * Registers the custom "primary_category" field in REST API
+ * results for posts.
+ *
+ * @since 1.0.10
+ * @author Jo Dickson
+ */
+function tu_add_primary_cat_to_post_feed() {
+	register_rest_field( 'post', 'primary_category',
+		array(
+			'get_callback' => 'tu_post_get_primary_category',
+			'schema'       => null,
+		)
+	);
+}
+
+add_action( 'rest_api_init', 'tu_add_primary_cat_to_post_feed' );
+
+
+/**
+ * REST API callback function that returns a post's
+ * primary tag ID (ACF plugin feature) using logic from
+ * the Today Child Theme.
+ *
+ * @since 1.0.10
+ * @author Jo Dickson
+ * @param array $object Array of single feed object data
+ * @param string $field_name Name of the current field (in this case, 'primary_tag')
+ * @param object $request WP_REST_Request object; contains details about the current request
+ * @return mixed WP_Term object, or null on failure
+ */
+function tu_post_get_primary_tag( $object, $field_name, $request ) {
+	$primary = null;
+
+	if ( function_exists( 'today_get_primary_tag' ) ) {
+		$post = get_post( $object['id'] );
+		if ( $tag = today_get_primary_tag( $post ) ) {
+			$primary = $tag->term_id;
+		}
+	}
+
+	return $primary;
+}
+
+
+/**
+ * Registers the custom "primary_tag" field in REST API
+ * results for posts.
+ *
+ * @since 1.0.10
+ * @author Jo Dickson
+ */
+function tu_add_primary_tag_to_post_feed() {
+	register_rest_field( 'post', 'primary_tag',
+		array(
+			'get_callback' => 'tu_post_get_primary_tag',
+			'schema'       => null,
+		)
+	);
+}
+
+add_action( 'rest_api_init', 'tu_add_primary_tag_to_post_feed' );
+
+
+/**
  * REST API callback function that returns a post's author
  * name, using logic that mimics the Today Child Theme
  *
