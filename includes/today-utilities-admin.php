@@ -208,3 +208,20 @@ add_filter( 'wp_handle_upload_prefilter', 'tu_handle_upload_prefilter', 10, 1 );
  * @author Jo Dickson
  */
 wp_oembed_add_provider( 'https://cdn.knightlab.com/libs/juxtapose/latest/embed/*', 'https://oembed.knightlab.com/juxtapose/' );
+
+
+/**
+ * Increases the request timeout for oEmbed content
+ * retrieval from the default 5 second limit.
+ *
+ * @since 1.0.11
+ * @author Jo Dickson
+ * @param array $args oEmbed remote get arguments
+ * @return array Modified $args
+ */
+function tu_oembed_timeout( $args ) {
+	$args['timeout'] = 15; // seconds
+	return $args;
+}
+
+add_filter( 'oembed_remote_get_args', 'tu_oembed_timeout' );
