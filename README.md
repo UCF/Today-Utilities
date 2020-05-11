@@ -15,6 +15,11 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.0.11 ###
+Enhancements:
+* Extended the request timeout for oEmbed content fetches
+* Updated packages
+
 ### 1.0.10 ###
 Enhancements:
 * Added primary category and tag to post REST API results
