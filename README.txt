@@ -1,8 +1,8 @@
 === Today Utilities ===
 Contributors: ucfwebcom
 Requires at least: 4.9.7
-Tested up to: 5.2.2
-Stable tag: 1.0.10
+Tested up to: 5.3
+Stable tag: 1.0.11
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,11 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.0.11 =
+Enhancements:
+* Extended the request timeout for oEmbed content fetches
+* Updated packages
 
 = 1.0.10 =
 Enhancements:
