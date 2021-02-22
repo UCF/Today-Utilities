@@ -13,16 +13,19 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'TU_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'TU_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TU_PLUGIN_STATIC_URL', TU_PLUGIN_URL . 'static/' );
 define( 'TU_PLUGIN_JS_URL', TU_PLUGIN_STATIC_URL . 'js/' );
 
-require_once 'includes/today-utilities-admin.php';
-require_once 'includes/today-options-gmucf.php';
-require_once 'includes/today-options-main-site-feed.php';
-require_once 'includes/today-feeds.php';
-require_once 'includes/today-revisions.php';
+require_once TU_PLUGIN_DIR . 'includes/today-utilities-admin.php';
 
-require_once 'api/today-custom-post-api.php';
+require_once TU_PLUGIN_DIR . 'includes/today-taxonomies.php';
+require_once TU_PLUGIN_DIR . 'includes/today-options-gmucf.php';
+require_once TU_PLUGIN_DIR . 'includes/today-options-main-site-feed.php';
+require_once TU_PLUGIN_DIR . 'includes/today-feeds.php';
+require_once TU_PLUGIN_DIR . 'includes/today-revisions.php';
+
+require_once TU_PLUGIN_DIR . 'api/today-custom-post-api.php';
 
 if ( ! function_exists( 'tu_init' ) ) {
 	function tu_init() {
