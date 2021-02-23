@@ -91,7 +91,9 @@ if ( ! class_exists( 'UCF_Authors_Taxonomy' ) ) {
 				'hierarchical'               => false,
 				'public'                     => true,
 				'show_ui'                    => true,
-				'show_admin_column'          => true,
+				'show_in_quick_edit'         => false,
+				'meta_box_cb'                => false, // Define custom ACF field for managing these instead
+				'show_admin_column'          => false,
 				'show_in_nav_menus'          => true,
 				'show_in_rest'               => true,
 				'show_tagcloud'              => true,
