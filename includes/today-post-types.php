@@ -15,7 +15,7 @@
 function tu_statement_registration_settings( $args, $post_type ) {
 	if ( $post_type !== 'ucf_statement' ) return $args;
 
-	// Remove author support on all post types that support it:
+	// Remove author support:
 	if ( $key = array_search( 'author', $args['supports'] ) ) {
 		unset( $args['supports'][$key] );
 	}
