@@ -153,7 +153,7 @@ add_filter( 'manage_edit-tu_author_columns', 'tu_author_columns', 10, 1 );
 
 
 /**
- * Defines columns to display for the Author taxonomy in the
+ * Defines content for Author taxonomy columns in the
  * WordPress admin.
  *
  * @author Jo Dickson
