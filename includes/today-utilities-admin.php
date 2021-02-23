@@ -191,7 +191,7 @@ add_filter( 'manage_tu_author_custom_column', 'tu_author_columns_content', 10, 3
  */
 function tu_author_taxonomy_yoast_titles( $options ) {
 	// "Show in search results?"
-	$options['noindex-tax-tu_author'] = false; // TODO not working?
+	$options['noindex-tax-tu_author'] = true; // yes, this must be true
 
 	// "Yoast SEO Meta Box"
 	$options['display-metabox-tax-tu_author'] = false;
