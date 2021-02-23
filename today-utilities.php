@@ -20,6 +20,7 @@ define( 'TU_PLUGIN_JS_URL', TU_PLUGIN_STATIC_URL . 'js/' );
 require_once TU_PLUGIN_DIR . 'includes/today-utilities-admin.php';
 
 require_once TU_PLUGIN_DIR . 'includes/today-taxonomies.php';
+require_once TU_PLUGIN_DIR . 'includes/today-post-types.php';
 require_once TU_PLUGIN_DIR . 'includes/today-options-gmucf.php';
 require_once TU_PLUGIN_DIR . 'includes/today-options-main-site-feed.php';
 require_once TU_PLUGIN_DIR . 'includes/today-feeds.php';
