@@ -195,6 +195,8 @@ function tu_author_taxonomy_yoast_titles( $options ) {
 
 	// "Yoast SEO Meta Box"
 	$options['display-metabox-tax-tu_author'] = false;
+
+	return $options;
 }
 
 add_filter( 'option_wpseo_titles', 'tu_author_taxonomy_yoast_titles', 99, 1 );
