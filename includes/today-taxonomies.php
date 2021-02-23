@@ -108,22 +108,3 @@ if ( ! class_exists( 'UCF_Authors_Taxonomy' ) ) {
 
 	add_action( 'init', array( 'UCF_Authors_Taxonomy', 'register' ), 10, 0 );
 }
-
-
-/**
- * Force-toggles various Yoast settings related to taxonomies
- *
- * @since 1.1.0
- * @author Jo Dickson
- * @param array $options Array of nested option keys/vals
- * @return array
- */
-function tu_author_taxonomy_yoast_titles( $options ) {
-	// "Show in search results?"
-	$options['noindex-tax-tu_authors'] = false; // TODO not working?
-
-	// "Yoast SEO Meta Box"
-	$options['display-metabox-tax-tu_authors'] = false;
-}
-
-add_filter( 'option_wpseo_titles', 'tu_author_taxonomy_yoast_titles', 99, 1 );

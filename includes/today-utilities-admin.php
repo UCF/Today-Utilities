@@ -71,9 +71,19 @@ add_filter( 'manage_ucf_statement_posts_columns', 'tu_custom_statement_columns' 
 function tu_custom_post_columns_content( $column_name, $post_id ) {
 	switch ( $column_name ) {
 		case 'tu-author':
-			// TODO print list of term edit links, if terms are in use;
-			// else, print custom author byline
-			echo 'TODO';
+			$author_name = '—';
+			if ( function_exists( 'today_get_post_author_data' ) ) {
+				$author_data = today_get_post_author_data( $post_id );
+				if ( isset( $author_data['name'] ) ) {
+					$author_name = $author_data['name'];
+				}
+				if ( isset( $author_data['term'] ) ) {
+					$post_type = get_post_type( $post_id ) ?? '';
+					$by_author_url = 'edit.php?post_type=' . $post_type . '&tu_authors=' . $author_data['term']->slug;
+					$author_name = '<a href="' . $by_author_url . '">' . $author_name . '</a>';
+				}
+			}
+			echo $author_name;
 			break;
 		case 'template':
 			$all_templates = get_page_templates( null, 'post' );
@@ -131,6 +141,24 @@ function tu_author_columns( $columns ) {
 
 add_filter( 'manage_edit-tu_authors_columns', 'tu_author_columns', 10, 1 );
 
+
+/**
+ * Force-toggles various Yoast settings related to taxonomies
+ *
+ * @since 1.1.0
+ * @author Jo Dickson
+ * @param array $options Array of nested option keys/vals
+ * @return array
+ */
+function tu_author_taxonomy_yoast_titles( $options ) {
+	// "Show in search results?"
+	$options['noindex-tax-tu_authors'] = false; // TODO not working?
+
+	// "Yoast SEO Meta Box"
+	$options['display-metabox-tax-tu_authors'] = false;
+}
+
+add_filter( 'option_wpseo_titles', 'tu_author_taxonomy_yoast_titles', 99, 1 );
 
 
 /**
