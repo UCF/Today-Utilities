@@ -79,7 +79,7 @@ function tu_custom_post_columns_content( $column_name, $post_id ) {
 				}
 				if ( isset( $author_data['term'] ) ) {
 					$post_type = get_post_type( $post_id ) ?? '';
-					$by_author_url = 'edit.php?post_type=' . $post_type . '&tu_authors=' . $author_data['term']->slug;
+					$by_author_url = 'edit.php?post_type=' . $post_type . '&tu_author=' . $author_data['term']->slug;
 					$author_name = '<a href="' . $by_author_url . '">' . $author_name . '</a>';
 				}
 			}
@@ -121,8 +121,8 @@ function tu_hide_author_description_field() {
 	echo "<style> .term-description-wrap { display:none; } </style>";
 }
 
-add_action( 'tu_authors_edit_form', 'tu_hide_author_description_field' );
-add_action( 'tu_authors_add_form', 'tu_hide_author_description_field' );
+add_action( 'tu_author_edit_form', 'tu_hide_author_description_field' );
+add_action( 'tu_author_add_form', 'tu_hide_author_description_field' );
 
 
 /**
@@ -136,10 +136,49 @@ function tu_author_columns( $columns ) {
 	if ( isset( $columns['description'] ) ) {
 		unset( $columns['description'] );
 	}
+	if ( isset( $columns['slug'] ) ) {
+		unset( $columns['slug'] );
+	}
+	if ( isset( $columns['posts'] ) ) {
+		unset( $columns['posts'] );
+	}
+
+	$columns['title'] = 'Title';
+	$columns['photo'] = 'Photo';
+	$columns['posts'] = 'Count';
 	return $columns;
 }
 
-add_filter( 'manage_edit-tu_authors_columns', 'tu_author_columns', 10, 1 );
+add_filter( 'manage_edit-tu_author_columns', 'tu_author_columns', 10, 1 );
+
+
+/**
+ * Defines columns to display for the Author taxonomy in the
+ * WordPress admin.
+ *
+ * @author Jo Dickson
+ * @since 1.1.0
+ */
+function tu_author_columns_content( $column_content, $column_name, $term_id ) {
+	$acf_term_id = 'tu_author_' . $term_id;
+	switch ( $column_name ) {
+		case 'title':
+			$column_content = get_field( 'author_title', $acf_term_id );
+			break;
+		case 'photo':
+			$author_photo = get_field( 'author_photo', $acf_term_id );
+			$author_photo_url = $author_photo['sizes']['thumbnail'] ?? '';
+			if ( $author_photo_url ) {
+				$column_content = '<img src="' . $author_photo_url . '" alt="" width="75" style="max-height: 75px; height: auto;">';
+			}
+			break;
+		default:
+			break;
+	}
+	return $column_content;
+}
+
+add_filter( 'manage_tu_author_custom_column', 'tu_author_columns_content', 10, 3 );
 
 
 /**
@@ -152,10 +191,10 @@ add_filter( 'manage_edit-tu_authors_columns', 'tu_author_columns', 10, 1 );
  */
 function tu_author_taxonomy_yoast_titles( $options ) {
 	// "Show in search results?"
-	$options['noindex-tax-tu_authors'] = false; // TODO not working?
+	$options['noindex-tax-tu_author'] = false; // TODO not working?
 
 	// "Yoast SEO Meta Box"
-	$options['display-metabox-tax-tu_authors'] = false;
+	$options['display-metabox-tax-tu_author'] = false;
 }
 
 add_filter( 'option_wpseo_titles', 'tu_author_taxonomy_yoast_titles', 99, 1 );

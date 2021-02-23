@@ -7,7 +7,7 @@ if ( ! class_exists( 'UCF_Authors_Taxonomy' ) ) {
 	class UCF_Authors_Taxonomy {
 		public static $label_singular = 'Author';
 		public static $label_plural   = 'Authors';
-		public static $text_domain    = 'tu_authors';
+		public static $text_domain    = 'tu_author';
 
 		/**
 		 * Registers the Authors custom taxonomy
@@ -36,7 +36,7 @@ if ( ! class_exists( 'UCF_Authors_Taxonomy' ) ) {
 	 	 * 						Defaults:
 	 	 * 							( 'singular'    => 'Author' ),
 	 	 * 							( 'plural'      => 'Authors' ),
-	 	 * 							( 'text_domain' => 'tu_authors' )
+	 	 * 							( 'text_domain' => 'tu_author' )
 		 * @return array
 		 **/
 		public static function labels( $labels ) {
@@ -78,7 +78,7 @@ if ( ! class_exists( 'UCF_Authors_Taxonomy' ) ) {
 	 	 * 						Defaults:
 	 	 * 							( 'singular'    => 'Author' ),
 	 	 * 							( 'plural'      => 'Authors' ),
-	 	 * 							( 'text_domain' => 'tu_authors' )
+	 	 * 							( 'text_domain' => 'tu_author' )
 		 * @return array
 		 */
 		public static function registration_args( $labels ) {
