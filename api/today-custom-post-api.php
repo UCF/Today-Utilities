@@ -327,15 +327,14 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 			// Get links to vanilla Statements REST endpoint,
 			// filtered by authors assigned to at least one Statement:
-			$query = $wpdb->prepare(
+			$authors = $wpdb->get_results(
 				"SELECT t.term_id, t.name, t.slug from $wpdb->terms AS t
 				INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id
 				INNER JOIN $wpdb->term_relationships AS r ON r.term_taxonomy_id = tt.term_taxonomy_id
 				INNER JOIN $wpdb->posts AS p ON p.ID = r.object_id
 				WHERE p.post_type = 'ucf_statement' AND tt.taxonomy = 'tu_author'
 				GROUP BY t.term_id"
-			);
-			$authors = $wpdb->get_results( $query ) ?: array();
+			) ?: array();
 
 			if ( $authors ) {
 				array_walk( $authors, function( &$val, $key ) {
