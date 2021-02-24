@@ -29,11 +29,36 @@ add_action( 'admin_enqueue_scripts', 'tu_admin_enqueue_sanitizehtml' );
  * @author Jo Dickson
  */
 function tu_custom_post_columns( $columns ) {
-	$columns['template'] = 'Template';
-	return $columns;
+	$new_columns = array();
+	foreach ( $columns as $key => $column ) {
+		// Exclude default 'author' column and move+re-label it below
+		if ( ! in_array( $key, array( 'author' ) ) ) {
+			$new_columns[$key] = $column;
+		}
+	}
+	$new_columns['tu-author'] = 'Author';
+	$new_columns['author']    = 'Publisher';
+	$new_columns['template']  = 'Template';
+	return $new_columns;
 }
 
 add_filter( 'manage_post_posts_columns', 'tu_custom_post_columns' );
+
+
+/**
+ * Defines columns in the WordPress admin when viewing
+ * all Statements or searching for Statement posts.
+ *
+ * @since 1.1.0
+ * @author Jo Dickson
+ */
+function tu_custom_statement_columns( $columns ) {
+	$columns = tu_custom_post_columns( $columns );
+	unset( $columns['template'] );
+	return $columns;
+}
+
+add_filter( 'manage_ucf_statement_posts_columns', 'tu_custom_statement_columns' );
 
 
 /**
@@ -45,6 +70,21 @@ add_filter( 'manage_post_posts_columns', 'tu_custom_post_columns' );
  */
 function tu_custom_post_columns_content( $column_name, $post_id ) {
 	switch ( $column_name ) {
+		case 'tu-author':
+			$author_name = '—';
+			if ( function_exists( 'today_get_post_author_data' ) ) {
+				$author_data = today_get_post_author_data( $post_id );
+				if ( isset( $author_data['name'] ) ) {
+					$author_name = $author_data['name'];
+				}
+				if ( isset( $author_data['term'] ) ) {
+					$post_type = get_post_type( $post_id ) ?? '';
+					$by_author_url = 'edit.php?post_type=' . $post_type . '&tu_author=' . $author_data['term']->slug;
+					$author_name = '<a href="' . $by_author_url . '">' . $author_name . '</a>';
+				}
+			}
+			echo $author_name;
+			break;
 		case 'template':
 			$all_templates = get_page_templates( null, 'post' );
 			$template_slug = get_page_template_slug( $post_id );
@@ -55,6 +95,111 @@ function tu_custom_post_columns_content( $column_name, $post_id ) {
 }
 
 add_action( 'manage_post_posts_custom_column', 'tu_custom_post_columns_content', 10, 2 );
+add_action( 'manage_ucf_statement_posts_custom_column', 'tu_custom_post_columns_content', 10, 2 );
+
+
+/**
+ * Removes the "author" metabox from the post edit screen.
+ *
+ * @author Jo Dickson
+ * @since 1.1.0
+ */
+function tu_remove_author_metabox() {
+	remove_meta_box( 'authordiv' , 'post' , 'normal' );
+}
+
+add_action( 'add_meta_boxes', 'tu_remove_author_metabox' );
+
+
+/**
+ * Hide the "description" field for new/edited Author terms.
+ *
+ * @author Jo Dickson
+ * @since 1.1.0
+ */
+function tu_hide_author_description_field() {
+	echo "<style> .term-description-wrap { display:none; } </style>";
+}
+
+add_action( 'tu_author_edit_form', 'tu_hide_author_description_field' );
+add_action( 'tu_author_add_form', 'tu_hide_author_description_field' );
+
+
+/**
+ * Defines columns to display for the Author taxonomy in the
+ * WordPress admin.
+ *
+ * @author Jo Dickson
+ * @since 1.1.0
+ */
+function tu_author_columns( $columns ) {
+	if ( isset( $columns['description'] ) ) {
+		unset( $columns['description'] );
+	}
+	if ( isset( $columns['slug'] ) ) {
+		unset( $columns['slug'] );
+	}
+	if ( isset( $columns['posts'] ) ) {
+		unset( $columns['posts'] );
+	}
+
+	$columns['title'] = 'Title';
+	$columns['photo'] = 'Photo';
+	$columns['posts'] = 'Count';
+	return $columns;
+}
+
+add_filter( 'manage_edit-tu_author_columns', 'tu_author_columns', 10, 1 );
+
+
+/**
+ * Defines content for Author taxonomy columns in the
+ * WordPress admin.
+ *
+ * @author Jo Dickson
+ * @since 1.1.0
+ */
+function tu_author_columns_content( $column_content, $column_name, $term_id ) {
+	$acf_term_id = 'tu_author_' . $term_id;
+	switch ( $column_name ) {
+		case 'title':
+			$column_content = get_field( 'author_title', $acf_term_id );
+			break;
+		case 'photo':
+			$author_photo = get_field( 'author_photo', $acf_term_id );
+			$author_photo_url = $author_photo['sizes']['thumbnail'] ?? '';
+			if ( $author_photo_url ) {
+				$column_content = '<img src="' . $author_photo_url . '" alt="" width="75" style="max-height: 75px; height: auto;">';
+			}
+			break;
+		default:
+			break;
+	}
+	return $column_content;
+}
+
+add_filter( 'manage_tu_author_custom_column', 'tu_author_columns_content', 10, 3 );
+
+
+/**
+ * Force-toggles various Yoast settings related to taxonomies
+ *
+ * @since 1.1.0
+ * @author Jo Dickson
+ * @param array $options Array of nested option keys/vals
+ * @return array
+ */
+function tu_author_taxonomy_yoast_titles( $options ) {
+	// "Show in search results?"
+	$options['noindex-tax-tu_author'] = true; // yes, this must be true
+
+	// "Yoast SEO Meta Box"
+	$options['display-metabox-tax-tu_author'] = false;
+
+	return $options;
+}
+
+add_filter( 'option_wpseo_titles', 'tu_author_taxonomy_yoast_titles', 99, 1 );
 
 
 /**
