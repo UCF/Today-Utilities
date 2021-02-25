@@ -346,6 +346,27 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 
 			return new WP_REST_Response( $retval, 200 );
 		}
+
+		public static function register_author_field() {
+			register_rest_field( 'ucf_statement', 'tu_author', array(
+				'get_callback' => array( 'UCF_Today_Custom_API', 'get_author_data' )
+			) );
+		}
+
+		public static function get_author_data( $statement ) {
+			$author_id = count( $statement['tu_author'] ) > 0 ? (int) $statement['tu_author'][0] : null;
+
+			$retval = null;
+
+			if ( $author_id && $author = get_term( $author_id, 'tu_author' ) ) {
+				$retval = array(
+					'id' => $author_id,
+					'name' => $author->name
+				);
+			}
+
+			return $retval;
+		}
 	}
 }
 
