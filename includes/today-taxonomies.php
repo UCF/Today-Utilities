@@ -105,6 +105,4 @@ if ( ! class_exists( 'UCF_Authors_Taxonomy' ) ) {
 			return $args;
 		}
 	}
-
-	add_action( 'init', array( 'UCF_Authors_Taxonomy', 'register' ), 10, 0 );
 }
