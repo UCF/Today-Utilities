@@ -63,6 +63,7 @@ register_deactivation_hook( TU_PLUGIN_FILE,  'tu_plugin_deactivation' );
 if ( ! function_exists( 'tu_init' ) ) {
 	function tu_init() {
 		add_action( 'rest_api_init', array( 'UCF_Today_Custom_API', 'register_rest_routes' ), 10, 0 );
+		add_action( 'rest_api_init', array( 'UCF_Today_Custom_API', 'register_author_field' ), 10, 0 );
 
 		// Register CPTs, Taxonomies
 		add_action( 'init', array( 'UCF_Authors_Taxonomy', 'register' ) );
