@@ -354,7 +354,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		}
 
 		public static function get_author_data( $statement ) {
-			$author_id = isset( $statement['tu_author'][0] ) ? (int) $statement['tu_author'][0] : null;
+			$author_id = count( $statement['tu_author'] ) > 0 ? (int) $statement['tu_author'][0] : null;
 
 			$retval = null;
 
