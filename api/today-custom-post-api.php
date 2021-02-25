@@ -348,7 +348,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		}
 
 		public static function register_author_field() {
-			register_rest_field( 'ucf_statement', 'author_data', array(
+			register_rest_field( 'ucf_statement', 'tu_author', array(
 				'get_callback' => array( 'UCF_Today_Custom_API', 'get_author_data' )
 			) );
 		}
