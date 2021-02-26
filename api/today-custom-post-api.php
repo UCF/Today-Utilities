@@ -359,9 +359,19 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			$retval = null;
 
 			if ( $author_id && $author = get_term( $author_id, 'tu_author' ) ) {
+				$title = get_field( 'author_title', "tu_author_$author_id" );
+				$photo = get_field( 'author_photo', "tu_author_$author_id", true );
+				$bio   = get_field( 'author_bio', "tu_author_$author_id" );
+
+				$fullname = ! empty( $title ) ? "{$author->name}, {$title}" : $author->name;
+
 				$retval = array(
-					'id' => $author_id,
-					'name' => $author->name
+					'id'       => $author_id,
+					'name'     => $author->name,
+					'title'    => $title,
+					'photo'    => $photo,
+					'bio'      => $bio,
+					'fullname' => $fullname
 				);
 			}
 
