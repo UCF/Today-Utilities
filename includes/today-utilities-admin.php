@@ -225,3 +225,24 @@ function tu_oembed_timeout( $args ) {
 }
 
 add_filter( 'oembed_remote_get_args', 'tu_oembed_timeout' );
+
+
+/**
+ * Modifies query args for ACF Select2 post field ajax lookups
+ *
+ * @since 1.1.0
+ * @author Jo Dickson
+ * @param array $args WP Query args
+ * @param array $field Field data
+ * @param int $post_id Post ID
+ * @return array Modified WP Query args
+ */
+function tu_acf_post_field_query( $args, $field, $post_id ) {
+	if ( count( $field['post_type'] ) === 1 && $field['post_type'][0] === 'post' ) {
+		$args['orderby'] = 'modified date';
+		$args['order']   = 'DESC';
+	}
+	return $args;
+}
+
+add_filter( 'acf/fields/post_object/query', 'tu_acf_post_field_query', 10, 3 );
