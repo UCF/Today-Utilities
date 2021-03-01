@@ -89,7 +89,7 @@ if ( ! class_exists( 'UCF_Authors_Taxonomy' ) ) {
 			$args = array(
 				'labels'                     => self::labels( $labels ),
 				'hierarchical'               => false,
-				'public'                     => true,
+				'public'                     => false,
 				'show_ui'                    => true,
 				'show_in_quick_edit'         => false,
 				'meta_box_cb'                => false, // Define custom ACF field for managing these instead
