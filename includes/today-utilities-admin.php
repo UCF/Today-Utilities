@@ -230,7 +230,7 @@ add_filter( 'oembed_remote_get_args', 'tu_oembed_timeout' );
 /**
  * Modifies query args for ACF Select2 post field ajax lookups
  *
- * @since 1.1.0
+ * @since 1.0.12
  * @author Jo Dickson
  * @param array $args WP Query args
  * @param array $field Field data
