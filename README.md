@@ -15,6 +15,11 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.0.12 ###
+Enhancements:
+* Added a filter for the `acf/fields/post_object/query` filter hook to modify the orderby/order rules of fetched posts in ACF post select inputs, so that posts are sorted by last modified/published date instead of by title.
+* Removed some references to nonexistent 'photoset' post type in the ACF config.
+
 ### 1.0.11 ###
 Enhancements:
 * Extended the request timeout for oEmbed content fetches
