@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 5.3
-Stable tag: 1.0.11
+Stable tag: 1.0.12
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,11 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.0.12 =
+Enhancements:
+* Added a filter for the `acf/fields/post_object/query` filter hook to modify the orderby/order rules of fetched posts in ACF post select inputs, so that posts are sorted by last modified/published date instead of by title.
+* Removed some references to nonexistent 'photoset' post type in the ACF config.
 
 = 1.0.11 =
 Enhancements:

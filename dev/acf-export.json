@@ -146,7 +146,7 @@
                 "label": "Email Content",
                 "name": "gmucf_email_content",
                 "type": "flexible_content",
-                "instructions": "Select and order the email content.\r\n<br><br>\r\nSelect <strong>at least<\/strong> one Top Story and one Featured Stories Row. Each Featured Stories Row must have two featured stories selected; one in each column.\r\n<br><br>\r\nSpotlights can be added but are not required. There is a maximum of 2 spotlights per email.\r\n<br><br>\r\nPhoto sets can be selected from either the Top Story or Featured Stories options.",
+                "instructions": "Select and order the email content.\r\n<br><br>\r\nSelect <strong>at least<\/strong> one Top Story and one Featured Stories Row. Each Featured Stories Row must have two featured stories selected; one in each column.\r\n<br><br>\r\nSpotlights can be added but are not required. There is a maximum of 2 spotlights per email.\r\n",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -175,8 +175,7 @@
                                     "id": ""
                                 },
                                 "post_type": [
-                                    "post",
-                                    "photoset"
+                                    "post"
                                 ],
                                 "taxonomy": [],
                                 "allow_null": 0,
@@ -285,8 +284,7 @@
                                             "id": ""
                                         },
                                         "post_type": [
-                                            "post",
-                                            "photoset"
+                                            "post"
                                         ],
                                         "taxonomy": [],
                                         "allow_null": 0,
@@ -387,8 +385,7 @@
                                             "id": ""
                                         },
                                         "post_type": [
-                                            "post",
-                                            "photoset"
+                                            "post"
                                         ],
                                         "taxonomy": [],
                                         "allow_null": 0,
