@@ -175,8 +175,7 @@
                                     "id": ""
                                 },
                                 "post_type": [
-                                    "post",
-                                    "photoset"
+                                    "post"
                                 ],
                                 "taxonomy": [],
                                 "allow_null": 0,
@@ -285,8 +284,7 @@
                                             "id": ""
                                         },
                                         "post_type": [
-                                            "post",
-                                            "photoset"
+                                            "post"
                                         ],
                                         "taxonomy": [],
                                         "allow_null": 0,
@@ -387,8 +385,7 @@
                                             "id": ""
                                         },
                                         "post_type": [
-                                            "post",
-                                            "photoset"
+                                            "post"
                                         ],
                                         "taxonomy": [],
                                         "allow_null": 0,
