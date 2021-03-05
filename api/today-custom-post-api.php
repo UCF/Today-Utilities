@@ -39,6 +39,15 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 					'args'                 => array( 'WP_REST_Post_Controller', 'get_collection_params' )
 				)
 			) );
+
+			register_rest_route( "{$root}/{$version}", "/main-site-header-story", array(
+				array(
+					'methods'              => WP_REST_Server::READABLE,
+					'callback'             => array( 'UCF_Today_Custom_API', 'get_mainsite_header_story' ),
+					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' ),
+					'args'                 => array( 'WP_REST_Post_Controller', 'get_collection_params' )
+				)
+			) );
 		}
 
 		/**
@@ -274,6 +283,44 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			}
 
 			return new WP_REST_Response( $retval[0], 200 );
+		}
+
+		/**
+		 * Gets the Main Site Header Story set in the
+		 * EDU News Feed options page
+		 * @author RJ Bruneel
+		 * @since 1.0.15
+		 * @param WP_REST_Request $request | Contains GET params
+		 * @return WP_REST_Response
+		 */
+		public static function get_mainsite_header_story( $request ) {
+
+			$retval['href'] = null;
+			$retval['img'] = null;
+			$retval['title'] = null;
+			$retval['subtitle'] = null;
+
+			$stories = get_fields( 'main_site_news_feed' );
+			$story = $stories['main_site_header_story'];
+
+			if( $story ) :
+
+				$title = ! empty( $stories['main_site_header_story_title_override'] )
+					? $stories['main_site_header_story_title_override']
+					: $story->post_title;
+
+				$sub_title = ! empty( $stories['main_site_header_story_sub_title_override'] )
+					? $stories['main_site_header_story_sub_title_override']
+					: wp_strip_all_tags( get_field( 'post_header_deck', $story ) );
+
+				$retval['href'] = get_permalink( $story );
+				$retval['img'] = today_get_thumbnail_url( $story, 'medium' );
+				$retval['title'] = $title;
+				$retval['subtitle'] = $sub_title;
+
+			endif;
+
+			return new WP_REST_Response( $retval, 200 );
 		}
 	}
 }
