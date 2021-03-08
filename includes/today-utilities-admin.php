@@ -397,7 +397,7 @@ add_filter( 'acf/fields/post_object/query', 'tu_acf_post_field_query', 10, 3 );
  * Adjusts available menu items in the WordPress admin.
  *
  * (Temporarily) removes access to the Statements post type
- * editing tools for users with admin-level capabilities.
+ * editing tools for users without admin-level capabilities.
  *
  * @since 1.1.0
  * @author Jo Dickson
