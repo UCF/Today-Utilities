@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 5.3
-Stable tag: 1.0.12
+Stable tag: 1.1.0
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,16 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.1.0 =
+Enhancements:
+* Added a new Author taxonomy (`tu_author`) and Statement post type (`ucf_statement`).
+* Updated admin columns for posts and the Statement post type to better differentiate between the Author taxonomy and the original publishing author ("publisher") of the post.
+* Added a new REST endpoint, `/ucf-news/v1/statement-archives/`, that lists grouped links to vanilla Statement endpoints, filtered by year and author.
+* Modified the `tu_author` field on the default Statements REST endpoint to include additional author information for convenience.
+
+Bug Fixes:
+* Fixed ordering of GMUCF "featured stories row" columns.
 
 = 1.0.12 =
 Enhancements:
