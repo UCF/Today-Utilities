@@ -391,3 +391,24 @@ function tu_acf_post_field_query( $args, $field, $post_id ) {
 }
 
 add_filter( 'acf/fields/post_object/query', 'tu_acf_post_field_query', 10, 3 );
+
+
+/**
+ * Adjusts available menu items in the WordPress admin.
+ *
+ * (Temporarily) removes access to the Statements post type
+ * editing tools for users with admin-level capabilities.
+ *
+ * @since 1.1.0
+ * @author Jo Dickson
+ * @return void
+ */
+function tu_manage_menus() {
+	// Assume that if a user can manage options, they should
+	// be able to create/edit Statements (admin +)
+	if ( ! current_user_can( 'manage_options' ) ) {
+		remove_menu_page( 'edit.php?post_type=ucf_statement' );
+	}
+}
+
+add_action( 'admin_menu', 'tu_manage_menus' );
