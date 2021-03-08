@@ -86,9 +86,9 @@ if ( ! class_exists( 'UCF_Statement_PostType' ) ) {
 		* @since 1.0.0
 		* @param array $labels The labels array
 		* 						Defaults:
-		* 							( 'singular'    => 'Location' ),
-		* 							( 'plural'      => 'Locations' ),
-		* 							( 'text_domain' => 'ucf_location' )
+		* 							( 'singular'    => 'Statement' ),
+		* 							( 'plural'      => 'Statements' ),
+		* 							( 'text_domain' => 'ucf_statement' )
 		* @return array
 		*/
 		public static function registration_args( $labels ) {
