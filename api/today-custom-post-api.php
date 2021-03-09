@@ -311,22 +311,22 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			$stories = get_fields( 'main_site_news_feed' );
 			$post = $stories['main_site_header_story'];
 			$title_override = $stories['main_site_header_story_title_override'];
-			$sub_title_override = $stories['main_site_header_story_sub_title_override'];
+			$subtitle_override = $stories['main_site_header_story_subtitle_override'];
 
 			if( $post ) :
 
-				if( ! empty( $title_override ) ) {
-					$post->post_title = $title_override;
-				}
-
-				if( empty( $sub_title_override ) ) {
-					$post->post_excerpt = wp_strip_all_tags( get_field( 'post_header_deck', $post ) );
-				} else {
-					$post->post_excerpt = $sub_title_override;
-				}
-
 				$controller = new WP_REST_Posts_Controller( 'post' );
 				$retval[] = $controller->prepare_item_for_response( $post, $request )->data;
+
+				if( ! empty( $title_override ) ) {
+					$retval[0]['title']['rendered'] = $title_override;
+				}
+
+				if( empty( $subtitle_override ) ) {
+					$retval[0]['excerpt']['rendered'] = wp_strip_all_tags( get_field( 'post_header_deck', $post ) );
+				} else {
+					$retval[0]['excerpt']['rendered'] = $subtitle_override;
+				}
 
 				return new WP_REST_Response( $retval, 200 );
 				
