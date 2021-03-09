@@ -295,32 +295,56 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		 */
 		public static function get_mainsite_header_story( $request ) {
 
-			$retval['href'] = null;
-			$retval['img'] = null;
-			$retval['title'] = null;
-			$retval['subtitle'] = null;
-
 			$stories = get_fields( 'main_site_news_feed' );
 			$story = $stories['main_site_header_story'];
 
 			if( $story ) :
 
-				$title = ! empty( $stories['main_site_header_story_title_override'] )
-					? $stories['main_site_header_story_title_override']
-					: $story->post_title;
+				$args = array(
+					'fields'   => 'ids',
+					'p' => $stories['main_site_header_story']->ID
+				);
 
-				$sub_title = ! empty( $stories['main_site_header_story_sub_title_override'] )
-					? $stories['main_site_header_story_sub_title_override']
-					: wp_strip_all_tags( get_field( 'post_header_deck', $story ) );
+				$query = new WP_Query( $args );
 
-				$retval['href'] = get_permalink( $story );
-				$retval['img'] = today_get_thumbnail_url( $story, 'medium' );
-				$retval['title'] = $title;
-				$retval['subtitle'] = $sub_title;
+				// TODO: Figure out how to modify the title and subtitle
+				$title_override = $stories['main_site_header_story_title_override'];
+				$sub_title_override = $stories['main_site_header_story_sub_title_override'];
+
+				if( ! empty( $title_override ) ) {
+					// $query->posts[0]->title->rendered = $title_override;
+				}
+
+				if( ! empty( $sub_title_override ) ) {
+					// $query->posts[0]->excerpt->rendered = $sub_title_override;
+				}
+
+				$request['include'] = $query->posts;
+
+				if ( ! isset( $request['page'] ) ) {
+					$request['page'] = 1;
+				}
+
+				// Use the post controller so we can tie into already set
+				// formats and filters.
+				$controller = new WP_REST_Posts_Controller( 'post' );
+
+				$posts = $controller->get_items( $request );
+
+				$retval = array();
+
+				foreach ( $posts as $post ) {
+					$retval[] = $controller->prepare_response_for_collection( $post );
+				}
+
+				return new WP_REST_Response( $retval[0], 200 );
+
+			else :
+
+				return array();
 
 			endif;
 
-			return new WP_REST_Response( $retval, 200 );
 		}
 	}
 }
