@@ -302,7 +302,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		 * Gets the Main Site Header Story set in the
 		 * EDU News Feed options page
 		 * @author RJ Bruneel
-		 * @since 1.0.13
+		 * @since 1.1.1
 		 * @param WP_REST_Request $request | Contains GET params
 		 * @return WP_REST_Response
 		 */
