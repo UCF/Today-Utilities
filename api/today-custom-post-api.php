@@ -316,7 +316,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			if( $post ) :
 
 				$controller = new WP_REST_Posts_Controller( 'post' );
-				$retval[] = $controller->prepare_item_for_response( $post, $request )->data;
+				$retval[] = $controller->prepare_response_for_collection( $controller->prepare_item_for_response( $post, $request ) );
 
 				if( ! empty( $title_override ) ) {
 					$retval[0]['title']['rendered'] = $title_override;
@@ -329,7 +329,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				}
 
 				return new WP_REST_Response( $retval, 200 );
-				
+
 			else :
 
 				return array();
