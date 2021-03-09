@@ -326,7 +326,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				}
 
 				$controller = new WP_REST_Posts_Controller( 'post' );
-				$retval[] = $controller->prepare_response_for_collection( $post );
+				$retval[] = $controller->prepare_item_for_response( $post, $request )->data;
 
 				return new WP_REST_Response( $retval, 200 );
 				
