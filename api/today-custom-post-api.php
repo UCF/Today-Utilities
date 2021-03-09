@@ -41,6 +41,15 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				)
 			) );
 
+			register_rest_route( "{$root}/{$version}", "/main-site-header-story", array(
+				array(
+					'methods'              => WP_REST_Server::READABLE,
+					'callback'             => array( 'UCF_Today_Custom_API', 'get_mainsite_header_story' ),
+					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' ),
+					'args'                 => array( 'WP_REST_Post_Controller', 'get_collection_params' )
+				)
+			) );
+
 			// Need to register this filter to allow the statement-archives
 			// endpoint to properly retrieve list of years
 			add_filter( 'get_archives_link', 'tu_get_archives_link', 10, 6 );
@@ -287,6 +296,68 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			}
 
 			return new WP_REST_Response( $retval[0], 200 );
+		}
+
+		/**
+		 * Gets the Main Site Header Story set in the
+		 * EDU News Feed options page
+		 * @author RJ Bruneel
+		 * @since 1.0.13
+		 * @param WP_REST_Request $request | Contains GET params
+		 * @return WP_REST_Response
+		 */
+		public static function get_mainsite_header_story( $request ) {
+
+			$stories = get_fields( 'main_site_news_feed' );
+			$story = $stories['main_site_header_story'];
+
+			if( $story ) :
+
+				$args = array(
+					'fields'   => 'ids',
+					'p' => $stories['main_site_header_story']->ID
+				);
+
+				$query = new WP_Query( $args );
+
+				// TODO: Figure out how to modify the title and subtitle
+				$title_override = $stories['main_site_header_story_title_override'];
+				$sub_title_override = $stories['main_site_header_story_sub_title_override'];
+
+				if( ! empty( $title_override ) ) {
+					// $query->posts[0]->title->rendered = $title_override;
+				}
+
+				if( ! empty( $sub_title_override ) ) {
+					// $query->posts[0]->excerpt->rendered = $sub_title_override;
+				}
+
+				$request['include'] = $query->posts;
+
+				if ( ! isset( $request['page'] ) ) {
+					$request['page'] = 1;
+				}
+
+				// Use the post controller so we can tie into already set
+				// formats and filters.
+				$controller = new WP_REST_Posts_Controller( 'post' );
+
+				$posts = $controller->get_items( $request );
+
+				$retval = array();
+
+				foreach ( $posts as $post ) {
+					$retval[] = $controller->prepare_response_for_collection( $post );
+				}
+
+				return new WP_REST_Response( $retval[0], 200 );
+
+			else :
+
+				return array();
+
+			endif;
+
 		}
 
 		/**
