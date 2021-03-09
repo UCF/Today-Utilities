@@ -125,10 +125,10 @@
             },
             {
                 "key": "field_60413cde7e88c",
-                "label": "Header Story Sub-Title Override",
-                "name": "main_site_header_story_sub_title_override",
+                "label": "Header Story Subtitle Override",
+                "name": "main_site_header_story_subtitle_override",
                 "type": "text",
-                "instructions": "The story sub-title will be displayed if left blank.",
+                "instructions": "The story subtitle will be displayed if left blank.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
