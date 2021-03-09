@@ -3,6 +3,7 @@
  * All custom wp-json API endpoints should be defined
  * within this file.
  */
+
 if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 	class UCF_Today_Custom_API extends WP_REST_Controller {
 		/**
@@ -46,6 +47,18 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 					'callback'             => array( 'UCF_Today_Custom_API', 'get_mainsite_header_story' ),
 					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' ),
 					'args'                 => array( 'WP_REST_Post_Controller', 'get_collection_params' )
+				)
+			) );
+
+			// Need to register this filter to allow the statement-archives
+			// endpoint to properly retrieve list of years
+			add_filter( 'get_archives_link', 'tu_get_archives_link', 10, 6 );
+
+			register_rest_route( "{$root}/{$version}", "/statement-archives", array(
+				array(
+					'methods'              => WP_REST_Server::READABLE,
+					'callback'             => array( 'UCF_Today_Custom_API', 'get_statement_archives' ),
+					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' )
 				)
 			) );
 		}
@@ -289,7 +302,7 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		 * Gets the Main Site Header Story set in the
 		 * EDU News Feed options page
 		 * @author RJ Bruneel
-		 * @since 1.0.15
+		 * @since 1.0.13
 		 * @param WP_REST_Request $request | Contains GET params
 		 * @return WP_REST_Response
 		 */
@@ -346,5 +359,115 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			endif;
 
 		}
+
+		/**
+		 * Returns a REST response that lists archives for
+		 * the Statement post type
+		 *
+		 * @since 1.1.0
+		 * @author Jo Dickson
+		 * @param WP_REST_Request $request Contains GET params
+		 * @return WP_REST_Response
+		 */
+		public static function get_statement_archives( $request ) {
+			global $wpdb;
+			$retval = array(
+				'all' => array(
+					'endpoint' => get_rest_url( null, '/wp/v2/statements' )
+				),
+				'years' => array(),
+				'authors' => array()
+			);
+
+			// Get links to vanilla Statements REST endpoint,
+			// filtered by year(s):
+			$years  = array_map( 'intval', array_filter( explode( ',', wp_get_archives( array(
+				'type'      => 'yearly',
+				'after'     => ',',
+				'echo'      => false,
+				'format'    => 'text', // custom format handling in `tu_get_archives_link()`
+				'post_type' => 'ucf_statement'
+			) ) ) ) );
+			foreach ( $years as $year ) {
+				// Strip timezone formatting; WordPress doesn't like
+				// it in before/after filters for whatever reason
+				$year_before = str_replace( '+00:00', '', date( 'c', mktime( -1, -1, -1, 13, 1, $year ) ) );
+				$year_after  = str_replace( '+00:00', '', date( 'c', mktime( 0, 0, 0, 1, 1, $year ) ) );
+				$retval['years'][] = array( 'year' => $year, 'endpoint' => get_rest_url( null, '/wp/v2/statements?before=' . $year_before . '&after=' . $year_after ) );
+			}
+
+			// Get links to vanilla Statements REST endpoint,
+			// filtered by authors assigned to at least one Statement:
+			$authors = $wpdb->get_results(
+				"SELECT t.term_id, t.name, t.slug from $wpdb->terms AS t
+				INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id
+				INNER JOIN $wpdb->term_relationships AS r ON r.term_taxonomy_id = tt.term_taxonomy_id
+				INNER JOIN $wpdb->posts AS p ON p.ID = r.object_id
+				WHERE p.post_type = 'ucf_statement' AND tt.taxonomy = 'tu_author'
+				GROUP BY t.term_id"
+			) ?: array();
+
+			if ( $authors ) {
+				array_walk( $authors, function( &$val, $key ) {
+					$val->endpoint = get_rest_url( null, '/wp/v2/statements?&tu_author=' . $val->term_id );
+				} );
+			}
+
+			$retval['authors'] = $authors;
+
+			return new WP_REST_Response( $retval, 200 );
+		}
+
+		public static function register_author_field() {
+			register_rest_field( 'ucf_statement', 'tu_author', array(
+				'get_callback' => array( 'UCF_Today_Custom_API', 'get_author_data' )
+			) );
+		}
+
+		public static function get_author_data( $statement ) {
+			$author_id = count( $statement['tu_author'] ) > 0 ? (int) $statement['tu_author'][0] : null;
+
+			$retval = null;
+
+			if ( $author_id && $author = get_term( $author_id, 'tu_author' ) ) {
+				$title = get_field( 'author_title', "tu_author_$author_id" );
+				$photo = get_field( 'author_photo', "tu_author_$author_id", true );
+				$bio   = get_field( 'author_bio', "tu_author_$author_id" );
+
+				$fullname = ! empty( $title ) ? "{$author->name}, {$title}" : $author->name;
+
+				$retval = array(
+					'id'       => $author_id,
+					'name'     => $author->name,
+					'title'    => $title,
+					'photo'    => $photo,
+					'bio'      => $bio,
+					'fullname' => $fullname
+				);
+			}
+
+			return $retval;
+		}
 	}
+}
+
+
+/**
+ * Adds support for custom "text" format for `get_archives_link()`.
+ *
+ * @since 1.1.0
+ * @author Jo Dickson
+ * @param string $link_html The archive HTML link content.
+ * @param string $url       URL to archive.
+ * @param string $text      Archive text description.
+ * @param string $format    Link format. Can be 'link', 'option', 'html', or custom.
+ * @param string $before    Content to prepend to the description.
+ * @param string $after     Content to append to the description.
+ * @return string Modified HTML link content
+ */
+function tu_get_archives_link( $link_html, $url, $text, $format, $before, $after ) {
+	if ( $format === 'text' ) {
+		$link_html = $before . $text . $after;
+	}
+	return $link_html;
 }

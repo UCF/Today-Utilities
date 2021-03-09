@@ -316,107 +316,6 @@
                         "display": "block",
                         "sub_fields": [
                             {
-                                "key": "field_5bef13d0868d1",
-                                "label": "Right Featured Story",
-                                "name": "gmucf_right_featured_story",
-                                "type": "group",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "50",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "layout": "block",
-                                "sub_fields": [
-                                    {
-                                        "key": "field_5bef13d1868d2",
-                                        "label": "Select a Story",
-                                        "name": "gmucf_story",
-                                        "type": "post_object",
-                                        "instructions": "",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "post_type": [
-                                            "post"
-                                        ],
-                                        "taxonomy": [],
-                                        "allow_null": 0,
-                                        "multiple": 0,
-                                        "return_format": "id",
-                                        "ui": 1
-                                    },
-                                    {
-                                        "key": "field_5bef13d1868d3",
-                                        "label": "Story Image",
-                                        "name": "gmucf_story_image",
-                                        "type": "image",
-                                        "instructions": "Select an image to replace the story's featured image in the email.",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "return_format": "array",
-                                        "preview_size": "full",
-                                        "library": "all",
-                                        "min_width": "",
-                                        "min_height": "",
-                                        "min_size": "",
-                                        "max_width": "",
-                                        "max_height": "",
-                                        "max_size": "",
-                                        "mime_types": "jpg, jpeg"
-                                    },
-                                    {
-                                        "key": "field_5bef13d1868d4",
-                                        "label": "Story Title",
-                                        "name": "gmucf_story_title",
-                                        "type": "text",
-                                        "instructions": "This will replace the story's title in the email.",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "default_value": "",
-                                        "placeholder": "",
-                                        "prepend": "",
-                                        "append": "",
-                                        "maxlength": ""
-                                    },
-                                    {
-                                        "key": "field_5bef13d1868d5",
-                                        "label": "Story Description",
-                                        "name": "gmucf_story_description",
-                                        "type": "textarea",
-                                        "instructions": "This will replace the story's Deck field value in the email.",
-                                        "required": 0,
-                                        "conditional_logic": 0,
-                                        "wrapper": {
-                                            "width": "",
-                                            "class": "",
-                                            "id": ""
-                                        },
-                                        "default_value": "",
-                                        "placeholder": "",
-                                        "maxlength": "",
-                                        "rows": "",
-                                        "new_lines": ""
-                                    }
-                                ]
-                            },
-                            {
                                 "key": "field_5bef1383868cc",
                                 "label": "Left Featured Story",
                                 "name": "gmucf_left_featured_story",
@@ -498,6 +397,107 @@
                                     },
                                     {
                                         "key": "field_5bef068697591",
+                                        "label": "Story Description",
+                                        "name": "gmucf_story_description",
+                                        "type": "textarea",
+                                        "instructions": "This will replace the story's Deck field value in the email.",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "default_value": "",
+                                        "placeholder": "",
+                                        "maxlength": "",
+                                        "rows": "",
+                                        "new_lines": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "field_5bef13d0868d1",
+                                "label": "Right Featured Story",
+                                "name": "gmucf_right_featured_story",
+                                "type": "group",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "50",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "layout": "block",
+                                "sub_fields": [
+                                    {
+                                        "key": "field_5bef13d1868d2",
+                                        "label": "Select a Story",
+                                        "name": "gmucf_story",
+                                        "type": "post_object",
+                                        "instructions": "",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "post_type": [
+                                            "post"
+                                        ],
+                                        "taxonomy": [],
+                                        "allow_null": 0,
+                                        "multiple": 0,
+                                        "return_format": "id",
+                                        "ui": 1
+                                    },
+                                    {
+                                        "key": "field_5bef13d1868d3",
+                                        "label": "Story Image",
+                                        "name": "gmucf_story_image",
+                                        "type": "image",
+                                        "instructions": "Select an image to replace the story's featured image in the email.",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "return_format": "array",
+                                        "preview_size": "full",
+                                        "library": "all",
+                                        "min_width": "",
+                                        "min_height": "",
+                                        "min_size": "",
+                                        "max_width": "",
+                                        "max_height": "",
+                                        "max_size": "",
+                                        "mime_types": "jpg, jpeg"
+                                    },
+                                    {
+                                        "key": "field_5bef13d1868d4",
+                                        "label": "Story Title",
+                                        "name": "gmucf_story_title",
+                                        "type": "text",
+                                        "instructions": "This will replace the story's title in the email.",
+                                        "required": 0,
+                                        "conditional_logic": 0,
+                                        "wrapper": {
+                                            "width": "",
+                                            "class": "",
+                                            "id": ""
+                                        },
+                                        "default_value": "",
+                                        "placeholder": "",
+                                        "prepend": "",
+                                        "append": "",
+                                        "maxlength": ""
+                                    },
+                                    {
+                                        "key": "field_5bef13d1868d5",
                                         "label": "Story Description",
                                         "name": "gmucf_story_description",
                                         "type": "textarea",
