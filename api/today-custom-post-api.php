@@ -309,49 +309,27 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		public static function get_mainsite_header_story( $request ) {
 
 			$stories = get_fields( 'main_site_news_feed' );
-			$story = $stories['main_site_header_story'];
+			$post = $stories['main_site_header_story'];
+			$title_override = $stories['main_site_header_story_title_override'];
+			$sub_title_override = $stories['main_site_header_story_sub_title_override'];
 
-			if( $story ) :
-
-				$args = array(
-					'fields'   => 'ids',
-					'p' => $stories['main_site_header_story']->ID
-				);
-
-				$query = new WP_Query( $args );
-
-				// TODO: Figure out how to modify the title and subtitle
-				$title_override = $stories['main_site_header_story_title_override'];
-				$sub_title_override = $stories['main_site_header_story_sub_title_override'];
+			if( $post ) :
 
 				if( ! empty( $title_override ) ) {
-					// $query->posts[0]->title->rendered = $title_override;
+					$post->post_title = $title_override;
 				}
 
-				if( ! empty( $sub_title_override ) ) {
-					// $query->posts[0]->excerpt->rendered = $sub_title_override;
+				if( empty( $sub_title_override ) ) {
+					$post->post_excerpt = wp_strip_all_tags( get_field( 'post_header_deck', $post ) );
+				} else {
+					$post->post_excerpt = $sub_title_override;
 				}
 
-				$request['include'] = $query->posts;
-
-				if ( ! isset( $request['page'] ) ) {
-					$request['page'] = 1;
-				}
-
-				// Use the post controller so we can tie into already set
-				// formats and filters.
 				$controller = new WP_REST_Posts_Controller( 'post' );
+				$retval[] = $controller->prepare_response_for_collection( $post );
 
-				$posts = $controller->get_items( $request );
-
-				$retval = array();
-
-				foreach ( $posts as $post ) {
-					$retval[] = $controller->prepare_response_for_collection( $post );
-				}
-
-				return new WP_REST_Response( $retval[0], 200 );
-
+				return new WP_REST_Response( $retval, 200 );
+				
 			else :
 
 				return array();
