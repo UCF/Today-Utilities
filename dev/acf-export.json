@@ -4,90 +4,11 @@
         "title": "EDU News Options",
         "fields": [
             {
-                "key": "field_5c9e37641bcbe",
-                "label": "Feed Mode",
-                "name": "main_site_stories_feed_config",
-                "type": "radio",
-                "instructions": "Choose which feed should be used.",
-                "required": 1,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "choices": {
-                    "default": "Display the most recent stories with \"Promote on Main Site\" field set to true.",
-                    "custom": "Display a custom set of stories."
-                },
-                "allow_null": 0,
-                "other_choice": 0,
-                "default_value": "default",
-                "layout": "vertical",
-                "return_format": "value",
-                "save_other_choice": 0
-            },
-            {
-                "key": "field_5c9e2f1d9c2c5",
-                "label": "Feed Expiration",
-                "name": "main_site_stories_expire",
-                "type": "date_picker",
-                "instructions": "Choose when the custom feed should expire.",
-                "required": 1,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_5c9e37641bcbe",
-                            "operator": "==",
-                            "value": "custom"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "display_format": "F j, Y",
-                "return_format": "m\/d\/Y",
-                "first_day": 0
-            },
-            {
-                "key": "field_5c9cddf6a827b",
-                "label": "Stories",
-                "name": "main_site_stories",
-                "type": "post_object",
-                "instructions": "Add stories to be displayed on www.ucf.edu.",
-                "required": 1,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_5c9e37641bcbe",
-                            "operator": "==",
-                            "value": "custom"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "post_type": [
-                    "post"
-                ],
-                "taxonomy": "",
-                "allow_null": 0,
-                "multiple": 1,
-                "return_format": "id",
-                "ui": 1
-            },
-            {
-                "key": "field_60413825e0ada",
-                "label": "Header Story",
-                "name": "main_site_header_story",
-                "type": "post_object",
-                "instructions": "The story to display in the header on UCF.edu (if the custom layout is active)",
+                "key": "field_6047f08d0dce6",
+                "label": "EDU Stories Feed Options",
+                "name": "edu_stories_feed_options",
+                "type": "group",
+                "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -95,21 +16,95 @@
                     "class": "",
                     "id": ""
                 },
-                "post_type": [
-                    "post"
-                ],
-                "taxonomy": "",
-                "allow_null": 1,
-                "multiple": 0,
-                "return_format": "object",
-                "ui": 1
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_5c9e37641bcbe",
+                        "label": "Feed Mode",
+                        "name": "main_site_stories_feed_config",
+                        "type": "radio",
+                        "instructions": "Choose which feed should be used.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "default": "Display the most recent stories with \"Promote on Main Site\" field set to true.",
+                            "custom": "Display a custom set of stories."
+                        },
+                        "allow_null": 0,
+                        "other_choice": 0,
+                        "default_value": "default",
+                        "layout": "vertical",
+                        "return_format": "value",
+                        "save_other_choice": 0
+                    },
+                    {
+                        "key": "field_5c9e2f1d9c2c5",
+                        "label": "Feed Expiration",
+                        "name": "main_site_stories_expire",
+                        "type": "date_picker",
+                        "instructions": "Choose when the custom feed should expire.",
+                        "required": 1,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_5c9e37641bcbe",
+                                    "operator": "==",
+                                    "value": "custom"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "F j, Y",
+                        "return_format": "m\/d\/Y",
+                        "first_day": 0
+                    },
+                    {
+                        "key": "field_5c9cddf6a827b",
+                        "label": "Stories",
+                        "name": "main_site_stories",
+                        "type": "post_object",
+                        "instructions": "Add stories to be displayed on www.ucf.edu.",
+                        "required": 1,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_5c9e37641bcbe",
+                                    "operator": "==",
+                                    "value": "custom"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "post_type": [
+                            "post"
+                        ],
+                        "taxonomy": "",
+                        "allow_null": 0,
+                        "multiple": 1,
+                        "return_format": "id",
+                        "ui": 1
+                    }
+                ]
             },
             {
-                "key": "field_60413bfa7e88b",
-                "label": "Header Story Title Override",
-                "name": "main_site_header_story_title_override",
-                "type": "text",
-                "instructions": "The story title will be displayed if left blank.",
+                "key": "field_6047f02c1aab3",
+                "label": "EDU Header Story Options",
+                "name": "edu_header_story_options",
+                "type": "group",
+                "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -117,30 +112,83 @@
                     "class": "",
                     "id": ""
                 },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_60413cde7e88c",
-                "label": "Header Story Subtitle Override",
-                "name": "main_site_header_story_subtitle_override",
-                "type": "text",
-                "instructions": "The story subtitle will be displayed if left blank.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
+                "layout": "block",
+                "sub_fields": [
+                    {
+                        "key": "field_60413825e0ada",
+                        "label": "Header Story",
+                        "name": "main_site_header_story",
+                        "type": "post_object",
+                        "instructions": "The story to display in the header on UCF.edu (if the custom layout is active)",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "post_type": [
+                            "post"
+                        ],
+                        "taxonomy": "",
+                        "allow_null": 1,
+                        "multiple": 0,
+                        "return_format": "object",
+                        "ui": 1
+                    },
+                    {
+                        "key": "field_60413bfa7e88b",
+                        "label": "Header Story Title Override",
+                        "name": "main_site_header_story_title_override",
+                        "type": "text",
+                        "instructions": "The story title will be displayed if left blank.",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_60413825e0ada",
+                                    "operator": "!=empty"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_60413cde7e88c",
+                        "label": "Header Story Subtitle Override",
+                        "name": "main_site_header_story_subtitle_override",
+                        "type": "text",
+                        "instructions": "The story subtitle will be displayed if left blank.",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_60413825e0ada",
+                                    "operator": "!=empty"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    }
+                ]
             }
         ],
         "location": [
