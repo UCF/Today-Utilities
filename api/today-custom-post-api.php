@@ -41,6 +41,15 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 				)
 			) );
 
+			register_rest_route( "{$root}/{$version}", "/main-site-header-story", array(
+				array(
+					'methods'              => WP_REST_Server::READABLE,
+					'callback'             => array( 'UCF_Today_Custom_API', 'get_mainsite_header_story' ),
+					'permissions_callback' => array( 'UCF_Today_Custom_API', 'get_permissions' ),
+					'args'                 => array( 'WP_REST_Post_Controller', 'get_collection_params' )
+				)
+			) );
+
 			// Need to register this filter to allow the statement-archives
 			// endpoint to properly retrieve list of years
 			add_filter( 'get_archives_link', 'tu_get_archives_link', 10, 6 );
@@ -287,6 +296,46 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 			}
 
 			return new WP_REST_Response( $retval[0], 200 );
+		}
+
+		/**
+		 * Gets the Main Site Header Story set in the
+		 * EDU News Feed options page
+		 * @author RJ Bruneel
+		 * @since 1.1.1
+		 * @param WP_REST_Request $request | Contains GET params
+		 * @return WP_REST_Response
+		 */
+		public static function get_mainsite_header_story( $request ) {
+
+			$stories = get_fields( 'main_site_news_feed' );
+			$post = $stories['main_site_header_story'];
+			$title_override = $stories['main_site_header_story_title_override'];
+			$subtitle_override = $stories['main_site_header_story_subtitle_override'];
+
+			if( $post ) :
+
+				$controller = new WP_REST_Posts_Controller( 'post' );
+				$retval[] = $controller->prepare_response_for_collection( $controller->prepare_item_for_response( $post, $request ) );
+
+				if( ! empty( $title_override ) ) {
+					$retval[0]['title']['rendered'] = $title_override;
+				}
+
+				if( empty( $subtitle_override ) ) {
+					$retval[0]['excerpt']['rendered'] = wp_strip_all_tags( get_field( 'post_header_deck', $post ) );
+				} else {
+					$retval[0]['excerpt']['rendered'] = $subtitle_override;
+				}
+
+				return new WP_REST_Response( $retval, 200 );
+
+			else :
+
+				return array();
+
+			endif;
+
 		}
 
 		/**
