@@ -307,11 +307,10 @@ if ( ! class_exists( 'UCF_Today_Custom_API' ) ) {
 		 * @return WP_REST_Response
 		 */
 		public static function get_mainsite_header_story( $request ) {
-
-			$stories = get_fields( 'main_site_news_feed' );
-			$post = $stories['edu_header_story_options']['main_site_header_story'];
-			$title_override = $stories['edu_header_story_options']['main_site_header_story_title_override'];
-			$subtitle_override = $stories['edu_header_story_options']['main_site_header_story_subtitle_override'];
+			$options = get_fields( 'main_site_news_feed' );
+			$post = $options['main_site_header_story'];
+			$title_override = $options['main_site_header_story_title_override'];
+			$subtitle_override = $options['main_site_header_story_subtitle_override'];
 
 			if( $post ) :
 
