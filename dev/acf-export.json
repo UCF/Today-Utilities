@@ -1,7 +1,7 @@
 [
     {
         "key": "group_5c9cddeea9e45",
-        "title": "EDU News Feed Options",
+        "title": "Main Site News Feed Options",
         "fields": [
             {
                 "key": "field_5c9e37641bcbe",
@@ -570,6 +570,103 @@
         "menu_order": 0,
         "position": "normal",
         "style": "seamless",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": ""
+    },
+    {
+        "key": "group_6054bc3d887d7",
+        "title": "Main Site Header Story Options",
+        "fields": [
+            {
+                "key": "field_60413825e0ada",
+                "label": "Header Story",
+                "name": "main_site_header_story",
+                "type": "post_object",
+                "instructions": "The story to display in the header on UCF.edu (if the custom layout is active)",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "post"
+                ],
+                "taxonomy": "",
+                "allow_null": 1,
+                "multiple": 0,
+                "return_format": "object",
+                "ui": 1
+            },
+            {
+                "key": "field_60413bfa7e88b",
+                "label": "Header Story Title Override",
+                "name": "main_site_header_story_title_override",
+                "type": "text",
+                "instructions": "The story title will be displayed if left blank.",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_60413825e0ada",
+                            "operator": "!=empty"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_60413cde7e88c",
+                "label": "Header Story Subtitle Override",
+                "name": "main_site_header_story_subtitle_override",
+                "type": "text",
+                "instructions": "The story subtitle will be displayed if left blank.",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_60413825e0ada",
+                            "operator": "!=empty"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "options_page",
+                    "operator": "==",
+                    "value": "main-site-news-feed"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
         "label_placement": "top",
         "instruction_placement": "label",
         "hide_on_screen": "",

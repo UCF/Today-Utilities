@@ -30,6 +30,13 @@ require_once TU_PLUGIN_DIR . 'includes/today-revisions.php';
 require_once TU_PLUGIN_DIR . 'api/today-custom-post-api.php';
 
 
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once TU_PLUGIN_DIR . 'includes/today-wpcli.php';
+
+	WP_CLI::add_command( 'today embeds', 'Today_Embed_Commands' );
+}
+
+
 /**
  * Function that runs on plugin activation
  *
