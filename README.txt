@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 5.3
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 7.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,13 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.1.1 =
+Enhancements:
+* Added a new REST endpoint, `main-site-header-story`, for use on the main site homepage's header (via the `[ucf-news-feed]` shortcode) for displaying a featured story.
+* Renamed the "EDU News Feed" options page to "Main Site Options", and added options for setting a featured header story for the main site homepage.
+* Added a new wp-cli command, `wp today embeds flush`, which removes all bad oEmbed metadata associated with posts (failed responses for oEmbeds).
+* Upgraded packages
 
 = 1.1.0 =
 Enhancements:
