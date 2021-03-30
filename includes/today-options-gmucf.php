@@ -18,14 +18,17 @@ function tu_add_gmucf_options_page() {
 		) );
 	}
 
+	/**
+	 * Adds GMUCF Options Page field group and fields
+	 **/
 	if ( function_exists( 'acf_add_local_field_group' ) ) {
 		// Create the array to add the fields to
-		$fields = array();
+		$gmucf_options_fields = array();
 
 		/**
 		 * Adds email send date field
 		 */
-		$fields[] = array(
+		$gmucf_options_fields[] = array(
 			'key'               => 'field_5be5fd67174cc',
 			'label'             => 'Email Send Date',
 			'name'              => 'gmucf_email_send_date',
@@ -46,7 +49,7 @@ function tu_add_gmucf_options_page() {
 		/**
 		 * Adds show social share buttons field
 		 **/
-		$fields[] = array(
+		$gmucf_options_fields[] = array(
 			'key'               => 'field_5be5fd67174e6',
 			'label'             => 'Show Social Share Buttons',
 			'name'              => 'gmucf_show_social_share_buttons',
@@ -69,7 +72,7 @@ function tu_add_gmucf_options_page() {
 		/**
 		 * Adds email content field
 		 **/
-		$fields[] = array(
+		$gmucf_options_fields[] = array(
 			'key'               => 'field_5be5fd816ee47',
 			'label'             => 'Email Content',
 			'name'              => 'gmucf_email_content',
@@ -470,7 +473,7 @@ function tu_add_gmucf_options_page() {
 		/**
 		 * Adds GMUCF Announcements field
 		 **/
-		$fields[] = array(
+		$gmucf_options_fields[] = array(
 			'key'               => 'field_5c5ca43d3a608',
 			'label'             => 'GMUCF Announcements',
 			'name'              => 'gmucf_announcements',
@@ -496,12 +499,12 @@ function tu_add_gmucf_options_page() {
 		);
 
 		/**
-		 * Defines field group
+		 * Defines GMUCF Options Page field group
 		 */
-		$field_group = array(
+		$gmucf_options_field_group = array(
 			'key'                   => 'group_5be5fd670dcaf',
 			'title'                 => 'GMUCF Options Page',
-			'fields'                => $fields,
+			'fields'                => $gmucf_options_fields,
 			'location'              => array(
 				array(
 					array(
@@ -521,7 +524,64 @@ function tu_add_gmucf_options_page() {
 			'description'           => '',
 		);
 
-		acf_add_local_field_group( $field_group );
+		acf_add_local_field_group( $gmucf_options_field_group );
+	}
+
+	/**
+	 * Adds Preview GMUCF Email field group and fields
+	 **/
+	if ( function_exists( 'acf_add_local_field_group' ) ) {
+		// Create the array to add the fields to
+		$preview_gmucf_email_fields = array();
+
+		/**
+		 * Adds the preview gmucf field message and button
+		 */
+		$preview_gmucf_email_fields[] = array(
+			'key'               => 'field_5bee321a8437d',
+			'label'             => '',
+			'name'              => '',
+			'type'              => 'message',
+			'instructions'      => '',
+			'required'          => 0,
+			'conditional_logic' => 0,
+			'wrapper'           => array(
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			),
+			'message'           => '<p style="margin-top: 0;">Click the button below to open the GMUCF email in a new tab. This page must be updated in order to see the latest changes.</p><a href="https://gmucf.smca.ucf.edu/news/mail/?no_cache=true" target="_blank" style="background: #fc0; padding: 8px; color: #000; text-decoration: none; font-weight: bold; display: block; text-align: center;">Preview Email</a>',
+			'new_lines'         => '',
+			'esc_html'          => 0,
+		);
+
+		/**
+		 * Defines the Preview GMUCF Email field group
+		 */
+		$preview_gmucf_email_field_group = array(
+			'key'                   => 'group_5bee32128a576',
+			'title'                 => 'Preview GMUCF Email',
+			'fields'                => $preview_gmucf_email_fields,
+			'location'              => array(
+				array(
+					array(
+						'param'    => 'options_page',
+						'operator' => '==',
+						'value'    => 'gmucf-email',
+					),
+				),
+			),
+			'menu_order'            => 1,
+			'position'              => 'side',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => '',
+		);
+
+		acf_add_local_field_group( $preview_gmucf_email_field_group );
 	}
 }
 
