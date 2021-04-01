@@ -16,17 +16,21 @@ function tu_add_main_site_feed_options_page() {
 			'updated_message' => 'Main site options updated'
 		) );
 	}
+}
 
-	/**
-	 * Adds Main Site Header Story Options field group and fields
-	 **/
+
+/**
+ * Function for adding the Main Site Options
+ * ACF field groups & fields
+ **/
+function tu_add_main_site_feed_options_fields() {
 	if ( function_exists( 'acf_add_local_field_group' ) ) {
-		// Create the array to add the fields to
+
+		// Create the array to add the
+		// Header Story Options field group fields to
 		$header_story_fields = array();
 
-		/**
-		 * Adds header story field
-		 */
+		// Adds header story field
 		$header_story_fields[] = array(
 			'key'               => 'field_60413825e0ada',
 			'label'             => 'Header Story',
@@ -50,9 +54,7 @@ function tu_add_main_site_feed_options_page() {
 			'ui'                => 1,
 		);
 
-		/**
-		 * Adds header story title override field
-		 */
+		// Adds header story title override field
 		$header_story_fields[] = array(
 			'key'               => 'field_60413bfa7e88b',
 			'label'             => 'Header Story Title Override',
@@ -80,9 +82,7 @@ function tu_add_main_site_feed_options_page() {
 			'maxlength'         => '',
 		);
 
-		/**
-		 * Adds header story subtitle override field
-		 */
+		// Adds header story subtitle override field
 		$header_story_fields[] = array(
 			'key'               => 'field_60413cde7e88c',
 			'label'             => 'Header Story Subtitle Override',
@@ -110,9 +110,7 @@ function tu_add_main_site_feed_options_page() {
 			'maxlength'         => '',
 		);
 
-		/**
-		 * Defines Main Site Header Story field group
-		 */
+		// Defines Main Site Header Story field group
 		$header_story_field_group = array(
 			'key'                   => 'group_6054bc3d887d7',
 			'title'                 => 'Main Site Header Story Options',
@@ -137,18 +135,12 @@ function tu_add_main_site_feed_options_page() {
 		);
 
 		acf_add_local_field_group( $header_story_field_group );
-	}
 
-	/**
-	 * Adds Main Site News Feed Options field group and fields
-	 **/
-	if ( function_exists( 'acf_add_local_field_group' ) ) {
-		// Create the array to add the fields to
+		// Create the array to add the
+		// Feed Options field group fields to
 		$news_feed_fields = array();
 
-		/**
-		 * Adds feed mode field
-		 */
+		// Adds feed mode field
 		$news_feed_fields[] = array(
 			'key'               => 'field_5c9e37641bcbe',
 			'label'             => 'Feed Mode',
@@ -174,9 +166,7 @@ function tu_add_main_site_feed_options_page() {
 			'save_other_choice' => 0,
 		);
 
-		/**
-		 * Adds feed expiration field
-		 */
+		// Adds feed expiration field
 		$news_feed_fields[] = array(
 			'key'               => 'field_5c9e2f1d9c2c5',
 			'label'             => 'Feed Expiration',
@@ -203,9 +193,7 @@ function tu_add_main_site_feed_options_page() {
 			'first_day'         => 0,
 		);
 
-		/**
-		 * Adds stories field
-		 */
+		// Adds stories field
 		$news_feed_fields[] = array(
 			'key'               => 'field_5c9cddf6a827b',
 			'label'             => 'Stories',
@@ -237,9 +225,7 @@ function tu_add_main_site_feed_options_page() {
 			'ui'                => 1,
 		);
 
-		/**
-		 * Defines Main Site News Feed Options field group
-		 */
+		// Defines Main Site News Feed Options field group
 		$news_feed_field_group = array(
 			'key'                   => 'group_5c9cddeea9e45',
 			'title'                 => 'Main Site News Feed Options',
