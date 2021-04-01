@@ -108,7 +108,7 @@ if ( ! class_exists( 'UCF_Authors_Taxonomy' ) ) {
 		/**
 		 * Registers the ACF Fields for Authors
 		 * @author Cadie Stockman
-		 * @since 1.1.2
+		 * @since 1.2.0
 		 * @return void
 		 */
 		public static function register_acf_fields() {

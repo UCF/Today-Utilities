@@ -133,7 +133,7 @@ if ( ! class_exists( 'UCF_Statement_PostType' ) ) {
 		/**
 		 * Registers the ACF Fields for Statements
 		 * @author Cadie Stockman
-		 * @since 1.1.2
+		 * @since 1.2.0
 		 * @return void
 		 */
 		public static function register_acf_fields() {
