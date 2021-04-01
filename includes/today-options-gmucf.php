@@ -1,7 +1,7 @@
 <?php
 /**
  * Functions for adding and supporting the
- * GMUCF Options Page and corresponding ACF fields.
+ * GMUCF Options Page.
  */
 
 function tu_add_gmucf_options_page() {
@@ -17,17 +17,19 @@ function tu_add_gmucf_options_page() {
 			'updated_message' => 'GMUCF Options Updated'
 		) );
 	}
+}
 
-	/**
-	 * Adds GMUCF Options Page field group and fields
-	 **/
+/**
+ * Function for adding the GMUCF Options Page
+ * ACF field groups & fields
+ **/
+function tu_add_gmucf_options_page_fields() {
 	if ( function_exists( 'acf_add_local_field_group' ) ) {
-		// Create the array to add the fields to
+		// Create the array to add the
+		// GMUCF Options fields to
 		$gmucf_options_fields = array();
 
-		/**
-		 * Adds email send date field
-		 */
+		// Adds email send date field
 		$gmucf_options_fields[] = array(
 			'key'               => 'field_5be5fd67174cc',
 			'label'             => 'Email Send Date',
@@ -46,9 +48,7 @@ function tu_add_gmucf_options_page() {
 			'first_day'         => 0,
 		);
 
-		/**
-		 * Adds show social share buttons field
-		 **/
+		// Adds show social share buttons field
 		$gmucf_options_fields[] = array(
 			'key'               => 'field_5be5fd67174e6',
 			'label'             => 'Show Social Share Buttons',
@@ -69,9 +69,7 @@ function tu_add_gmucf_options_page() {
 			'ui_off_text'       => '',
 		);
 
-		/**
-		 * Adds email content field
-		 **/
+		// Adds email content field
 		$gmucf_options_fields[] = array(
 			'key'               => 'field_5be5fd816ee47',
 			'label'             => 'Email Content',
@@ -470,9 +468,7 @@ function tu_add_gmucf_options_page() {
 			'max'               => '',
 		);
 
-		/**
-		 * Adds GMUCF Announcements field
-		 **/
+		// Adds GMUCF Announcements field
 		$gmucf_options_fields[] = array(
 			'key'               => 'field_5c5ca43d3a608',
 			'label'             => 'GMUCF Announcements',
@@ -498,9 +494,7 @@ function tu_add_gmucf_options_page() {
 			'placeholder'       => '',
 		);
 
-		/**
-		 * Defines GMUCF Options Page field group
-		 */
+		// Defines GMUCF Options Page field group
 		$gmucf_options_field_group = array(
 			'key'                   => 'group_5be5fd670dcaf',
 			'title'                 => 'GMUCF Options Page',
@@ -525,18 +519,12 @@ function tu_add_gmucf_options_page() {
 		);
 
 		acf_add_local_field_group( $gmucf_options_field_group );
-	}
 
-	/**
-	 * Adds Preview GMUCF Email field group and fields
-	 **/
-	if ( function_exists( 'acf_add_local_field_group' ) ) {
-		// Create the array to add the fields to
+		// Create the array to add the
+		// Preview GMUCF Email fields to
 		$preview_gmucf_email_fields = array();
 
-		/**
-		 * Adds the preview gmucf field message and button
-		 */
+		// Adds the preview gmucf field message and button
 		$preview_gmucf_email_fields[] = array(
 			'key'               => 'field_5bee321a8437d',
 			'label'             => '',
@@ -555,9 +543,7 @@ function tu_add_gmucf_options_page() {
 			'esc_html'          => 0,
 		);
 
-		/**
-		 * Defines the Preview GMUCF Email field group
-		 */
+		// Defines the Preview GMUCF Email field group
 		$preview_gmucf_email_field_group = array(
 			'key'                   => 'group_5bee32128a576',
 			'title'                 => 'Preview GMUCF Email',
