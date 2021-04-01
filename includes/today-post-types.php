@@ -129,5 +129,73 @@ if ( ! class_exists( 'UCF_Statement_PostType' ) ) {
 
 			return $args;
 		}
+
+		/**
+		 * Registers the ACF Fields for Statements
+		 * @author Cadie Stockman
+		 * @since 1.1.2
+		 * @return void
+		 */
+		public static function register_acf_fields() {
+			// Bail out if the function is missing.
+			if ( ! function_exists( 'acf_add_local_field_group' ) ) return;
+
+			// Create the field array.
+			$fields = array();
+
+			/**
+			 * Adds the author field
+			 */
+			$fields[] = array(
+				'key'               => 'field_6037ba9d455c6',
+				'label'             => 'Author',
+				'name'              => 'post_author_term',
+				'type'              => 'taxonomy',
+				'instructions'      => 'Choose an existing Author to assign to this Statement. Name, title, photo and bio information will be referenced from the Author that\'s selected.',
+				'required'          => 1,
+				'conditional_logic' => 0,
+				'wrapper'           => array(
+					'width' => '',
+					'class' => '',
+					'id'    => '',
+				),
+				'taxonomy'          => 'tu_author',
+				'field_type'        => 'select',
+				'allow_null'        => 0,
+				'add_term'          => 1,
+				'save_terms'        => 1,
+				'load_terms'        => 1,
+				'return_format'     => 'object',
+				'multiple'          => 0,
+			);
+
+			/**
+			 * Defines field group
+			 */
+			$field_group = array(
+				'key'                   => 'group_603516b56f247',
+				'title'                 => 'Statements Fields',
+				'fields'                => $fields,
+				'location'              => array(
+					array(
+						array(
+							'param'    => 'post_type',
+							'operator' => '==',
+							'value'    => 'ucf_statement',
+						),
+					),
+				),
+				'menu_order'            => 0,
+				'position'              => 'normal',
+				'style'                 => 'default',
+				'label_placement'       => 'top',
+				'instruction_placement' => 'label',
+				'hide_on_screen'        => '',
+				'active'                => true,
+				'description'           => '',
+			);
+
+			acf_add_local_field_group( $field_group );
+		}
 	}
 }
