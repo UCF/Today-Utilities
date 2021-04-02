@@ -22,6 +22,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 == Changelog ==
 
+= 1.2.0 =
+Enhancements:
+* Defined ACF field groups and fields in PHP which removes the need of the ACF export file.
+
 = 1.1.1 =
 Enhancements:
 * Added a new REST endpoint, `main-site-header-story`, for use on the main site homepage's header (via the `[ucf-news-feed]` shortcode) for displaying a featured story.

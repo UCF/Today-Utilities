@@ -104,5 +104,121 @@ if ( ! class_exists( 'UCF_Authors_Taxonomy' ) ) {
 
 			return $args;
 		}
+
+		/**
+		 * Registers the ACF Fields for Authors
+		 * @author Cadie Stockman
+		 * @since 1.2.0
+		 * @return void
+		 */
+		public static function register_acf_fields() {
+			// Bail out if the function is missing.
+			if ( ! function_exists( 'acf_add_local_field_group' ) ) return;
+
+			// Create the field array.
+			$fields = array();
+
+			/**
+			 * Adds the title field
+			 */
+			$fields[] = array(
+				'key'               => 'field_60351b469550e',
+				'label'             => 'Title',
+				'name'              => 'author_title',
+				'type'              => 'text',
+				'instructions'      => 'A title for this author, e.g. "Director of [department]".',
+				'required'          => 0,
+				'conditional_logic' => 0,
+				'wrapper'           => array(
+					'width' => '',
+					'class' => '',
+					'id'    => '',
+				),
+				'default_value'     => '',
+				'placeholder'       => '',
+				'prepend'           => '',
+				'append'            => '',
+				'maxlength'         => '',
+			);
+
+			/**
+			 * Adds the photo field
+			 */
+			$fields[] = array(
+				'key'               => 'field_60351b549550f',
+				'label'             => 'Photo',
+				'name'              => 'author_photo',
+				'type'              => 'image',
+				'instructions'      => '',
+				'required'          => 0,
+				'conditional_logic' => 0,
+				'wrapper'           => array(
+					'width' => '',
+					'class' => '',
+					'id'    => '',
+				),
+				'return_format'     => 'array',
+				'preview_size'      => 'thumbnail',
+				'library'           => 'all',
+				'min_width'         => '',
+				'min_height'        => '',
+				'min_size'          => '',
+				'max_width'         => '',
+				'max_height'        => '',
+				'max_size'          => '',
+				'mime_types'        => '',
+			);
+
+			/**
+			 * Adds the bio field
+			 **/
+			$fields[] = array(
+				'key'               => 'field_60351b5895510',
+				'label'             => 'Bio',
+				'name'              => 'author_bio',
+				'type'              => 'wysiwyg',
+				'instructions'      => 'A brief bio or description for this author.<br><br>This field must be set in order to display any author information (Author Name, Title, Bio, Photo) below post/statement content.',
+				'required'          => 0,
+				'conditional_logic' => 0,
+				'wrapper'           => array(
+					'width' => '',
+					'class' => '',
+					'id'    => '',
+				),
+				'default_value'     => '',
+				'tabs'              => 'text',
+				'media_upload'      => 0,
+				'toolbar'           => 'full',
+				'delay'             => 0,
+			);
+
+			/**
+			 * Defines field group
+			 */
+			$field_group = array(
+				'key'                   => 'group_60351a1a8f796',
+				'title'                 => 'Author Fields',
+				'fields'                => $fields,
+				'location'              => array(
+					array(
+						array(
+							'param'    => 'taxonomy',
+							'operator' => '==',
+							'value'    => 'tu_author',
+						),
+					),
+				),
+				'menu_order'            => 0,
+				'position'              => 'normal',
+				'style'                 => 'default',
+				'label_placement'       => 'top',
+				'instruction_placement' => 'label',
+				'hide_on_screen'        => '',
+				'active'                => true,
+				'description'           => '',
+			);
+
+			acf_add_local_field_group( $field_group );
+		}
 	}
 }

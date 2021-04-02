@@ -17,3 +17,238 @@ function tu_add_main_site_feed_options_page() {
 		) );
 	}
 }
+
+
+/**
+ * Function for adding the Main Site Options
+ * ACF field groups & fields
+ **/
+function tu_add_main_site_feed_options_fields() {
+	if ( function_exists( 'acf_add_local_field_group' ) ) {
+
+		// Create the array to add the
+		// Header Story Options field group fields to
+		$header_story_fields = array();
+
+		// Adds header story field
+		$header_story_fields[] = array(
+			'key'               => 'field_60413825e0ada',
+			'label'             => 'Header Story',
+			'name'              => 'main_site_header_story',
+			'type'              => 'post_object',
+			'instructions'      => 'The story to display in the header on UCF.edu (if the custom layout is active)',
+			'required'          => 0,
+			'conditional_logic' => 0,
+			'wrapper'           => array(
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			),
+			'post_type'         => array(
+				0 => 'post',
+			),
+			'taxonomy'          => '',
+			'allow_null'        => 1,
+			'multiple'          => 0,
+			'return_format'     => 'object',
+			'ui'                => 1,
+		);
+
+		// Adds header story title override field
+		$header_story_fields[] = array(
+			'key'               => 'field_60413bfa7e88b',
+			'label'             => 'Header Story Title Override',
+			'name'              => 'main_site_header_story_title_override',
+			'type'              => 'text',
+			'instructions'      => 'The story title will be displayed if left blank.',
+			'required'          => 0,
+			'conditional_logic' => array(
+				array(
+					array(
+						'field'    => 'field_60413825e0ada',
+						'operator' => '!=empty',
+					),
+				),
+			),
+			'wrapper'           => array(
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			),
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
+		);
+
+		// Adds header story subtitle override field
+		$header_story_fields[] = array(
+			'key'               => 'field_60413cde7e88c',
+			'label'             => 'Header Story Subtitle Override',
+			'name'              => 'main_site_header_story_subtitle_override',
+			'type'              => 'text',
+			'instructions'      => 'The story subtitle will be displayed if left blank.',
+			'required'          => 0,
+			'conditional_logic' => array(
+				array(
+					array(
+						'field'    => 'field_60413825e0ada',
+						'operator' => '!=empty',
+					),
+				),
+			),
+			'wrapper'           => array(
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			),
+			'default_value'     => '',
+			'placeholder'       => '',
+			'prepend'           => '',
+			'append'            => '',
+			'maxlength'         => '',
+		);
+
+		// Defines Main Site Header Story field group
+		$header_story_field_group = array(
+			'key'                   => 'group_6054bc3d887d7',
+			'title'                 => 'Main Site Header Story Options',
+			'fields'                => $header_story_fields,
+			'location'              => array(
+				array(
+					array(
+						'param'    => 'options_page',
+						'operator' => '==',
+						'value'    => 'main-site-news-feed',
+					),
+				),
+			),
+			'menu_order'            => 0,
+			'position'              => 'normal',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => '',
+		);
+
+		acf_add_local_field_group( $header_story_field_group );
+
+		// Create the array to add the
+		// Feed Options field group fields to
+		$news_feed_fields = array();
+
+		// Adds feed mode field
+		$news_feed_fields[] = array(
+			'key'               => 'field_5c9e37641bcbe',
+			'label'             => 'Feed Mode',
+			'name'              => 'main_site_stories_feed_config',
+			'type'              => 'radio',
+			'instructions'      => 'Choose which feed should be used.',
+			'required'          => 1,
+			'conditional_logic' => 0,
+			'wrapper'           => array(
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			),
+			'choices'           => array(
+				'default' => 'Display the most recent stories with "Promote on Main Site" field set to true.',
+				'custom'  => 'Display a custom set of stories.',
+			),
+			'allow_null'        => 0,
+			'other_choice'      => 0,
+			'default_value'     => 'default',
+			'layout'            => 'vertical',
+			'return_format'     => 'value',
+			'save_other_choice' => 0,
+		);
+
+		// Adds feed expiration field
+		$news_feed_fields[] = array(
+			'key'               => 'field_5c9e2f1d9c2c5',
+			'label'             => 'Feed Expiration',
+			'name'              => 'main_site_stories_expire',
+			'type'              => 'date_picker',
+			'instructions'      => 'Choose when the custom feed should expire.',
+			'required'          => 1,
+			'conditional_logic' => array(
+				array(
+					array(
+						'field'    => 'field_5c9e37641bcbe',
+						'operator' => '==',
+						'value'    => 'custom',
+					),
+				),
+			),
+			'wrapper'           => array(
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			),
+			'display_format'    => 'F j, Y',
+			'return_format'     => 'm/d/Y',
+			'first_day'         => 0,
+		);
+
+		// Adds stories field
+		$news_feed_fields[] = array(
+			'key'               => 'field_5c9cddf6a827b',
+			'label'             => 'Stories',
+			'name'              => 'main_site_stories',
+			'type'              => 'post_object',
+			'instructions'      => 'Add stories to be displayed on www.ucf.edu.',
+			'required'          => 1,
+			'conditional_logic' => array(
+				array(
+					array(
+						'field'    => 'field_5c9e37641bcbe',
+						'operator' => '==',
+						'value'    => 'custom',
+					),
+				),
+			),
+			'wrapper'           => array(
+				'width' => '',
+				'class' => '',
+				'id'    => '',
+			),
+			'post_type'         => array(
+				0 => 'post',
+			),
+			'taxonomy'          => '',
+			'allow_null'        => 0,
+			'multiple'          => 1,
+			'return_format'     => 'id',
+			'ui'                => 1,
+		);
+
+		// Defines Main Site News Feed Options field group
+		$news_feed_field_group = array(
+			'key'                   => 'group_5c9cddeea9e45',
+			'title'                 => 'Main Site News Feed Options',
+			'fields'                => $news_feed_fields,
+			'location'              => array(
+				array(
+					array(
+						'param'    => 'options_page',
+						'operator' => '==',
+						'value'    => 'main-site-news-feed',
+					),
+				),
+			),
+			'menu_order'            => 0,
+			'position'              => 'normal',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => '',
+		);
+
+		acf_add_local_field_group( $news_feed_field_group );
+	}
+}
