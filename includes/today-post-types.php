@@ -153,20 +153,11 @@ if ( ! class_exists( 'UCF_Statement_PostType' ) ) {
 				'type'              => 'taxonomy',
 				'instructions'      => 'Choose an existing Author to assign to this Statement. Name, title, photo and bio information will be referenced from the Author that\'s selected.',
 				'required'          => 1,
-				'conditional_logic' => 0,
-				'wrapper'           => array(
-					'width' => '',
-					'class' => '',
-					'id'    => '',
-				),
 				'taxonomy'          => 'tu_author',
 				'field_type'        => 'select',
-				'allow_null'        => 0,
-				'add_term'          => 1,
 				'save_terms'        => 1,
 				'load_terms'        => 1,
 				'return_format'     => 'object',
-				'multiple'          => 0,
 			);
 
 			/**
@@ -185,14 +176,6 @@ if ( ! class_exists( 'UCF_Statement_PostType' ) ) {
 						),
 					),
 				),
-				'menu_order'            => 0,
-				'position'              => 'normal',
-				'style'                 => 'default',
-				'label_placement'       => 'top',
-				'instruction_placement' => 'label',
-				'hide_on_screen'        => '',
-				'active'                => true,
-				'description'           => '',
 			);
 
 			acf_add_local_field_group( $field_group );
