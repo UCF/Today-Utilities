@@ -81,7 +81,7 @@ if ( ! function_exists( 'tu_init' ) ) {
 		add_action( 'init', 'tu_add_main_site_feed_options_page' );
 
 		// Register ACF fields for CPTs, Taxonomies, and Option pages
-		if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+		if ( class_exists( 'acf_pro' ) ) {
 			add_action( 'acf/init', array( 'UCF_Authors_Taxonomy', 'register_acf_fields' ), 10, 0 );
 			add_action( 'acf/init', array( 'UCF_Statement_PostType', 'register_acf_fields' ), 10, 0 );
 			add_action( 'acf/init', 'tu_add_main_site_feed_options_fields', 10, 0 );
