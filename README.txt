@@ -1,8 +1,8 @@
 === Today Utilities ===
 Contributors: ucfwebcom
 Requires at least: 4.9.7
-Tested up to: 5.3
-Stable tag: 1.1.1
+Tested up to: 5.7
+Stable tag: 1.2.0
 Requires PHP: 7.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.2.0 =
+Enhancements:
+* Defined ACF field groups and fields in PHP which removes the need of the ACF export file.
 
 = 1.1.1 =
 Enhancements:
