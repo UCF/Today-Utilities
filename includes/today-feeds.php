@@ -214,3 +214,20 @@ function tu_add_tax_query_to_posts_endpoint( $args, $request ) {
 }
 
 add_action( 'rest_post_query', 'tu_add_tax_query_to_posts_endpoint', 2, 10 );
+
+
+/**
+ * Adds a feed to support the UCF Mobile App concise
+ *
+ * @since 1.1.2
+ * @author RJ Bruneel
+ */
+function add_concise_feed() {
+    add_feed( 'concise', 'render_concise_feed' );
+}
+add_action( 'init', 'add_concise_feed' );
+ 
+function render_concise_feed() {
+    header( 'Content-Type: application/rss+xml' );
+	require_once TU_PLUGIN_DIR . 'template-parts/rss/concise.php';
+}
