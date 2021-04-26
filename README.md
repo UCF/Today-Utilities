@@ -15,6 +15,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.2.0 ###
+Enhancements:
+* Added a concise RSS feed to support the UCF Mobile App.
+
 ### 1.1.1 ###
 Enhancements:
 * Added a new REST endpoint, `main-site-header-story`, for use on the main site homepage's header (via the `[ucf-news-feed]` shortcode) for displaying a featured story.
