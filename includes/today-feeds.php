@@ -219,7 +219,7 @@ add_action( 'rest_post_query', 'tu_add_tax_query_to_posts_endpoint', 2, 10 );
 /**
  * Adds a feed to support the UCF Mobile App concise
  *
- * @since 1.1.2
+ * @since 1.2.0
  * @author RJ Bruneel
  */
 function add_concise_feed() {
