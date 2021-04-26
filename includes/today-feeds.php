@@ -222,11 +222,11 @@ add_action( 'rest_post_query', 'tu_add_tax_query_to_posts_endpoint', 2, 10 );
  * @since 1.2.0
  * @author RJ Bruneel
  */
-function add_concise_feed() {
-    add_feed( 'concise', 'render_concise_feed' );
+function tu_add_concise_feed() {
+    add_feed( 'concise', 'tu_render_concise_feed' );
 }
-add_action( 'init', 'add_concise_feed' );
+add_action( 'init', 'tu_add_concise_feed' );
  
-function render_concise_feed() {
+function tu_render_concise_feed() {
 	require_once TU_PLUGIN_DIR . 'template-parts/rss/concise.php';
 }
