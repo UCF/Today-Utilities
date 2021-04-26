@@ -1,9 +1,5 @@
 <?php
-$posts = wp_get_recent_posts( array(
-	'numberposts' => 10,
-	'post_status' => 'publish'
-) );
-header( 'Content-Type: ' . feed_content_type( 'rss-http' ) . '; charset=' . get_option( 'blog_charset' ), true );
+header( 'Content-Type: ' . feed_content_type( 'rss2' ) . '; charset=' . get_option( 'blog_charset' ), true );
 echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?' . '>';
 ?>
 <rss version="2.0"
@@ -26,7 +22,6 @@ echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?' . '>
 		<?php do_action( 'rss2_head' ); ?>
 		<?php 
 		while( have_posts() ) : the_post();
-			$deck = get_field( 'post_header_deck' );
 		?>
 			<item>
 				<title><?php the_title_rss(); ?></title>
@@ -34,7 +29,7 @@ echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?' . '>
 				<pubDate><?php echo mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ); ?></pubDate>
 				<dc:creator></dc:creator>
 				<guid isPermaLink="false"><?php the_guid(); ?></guid>
-				<description><?php if( ! empty( $deck ) ) echo '<![CDATA[' . $deck . ']]>'; ?></description>
+				<description><?php echo the_excerpt_rss(); ?></description>
 				<content:encoded></content:encoded>
 				<?php rss_enclosure(); ?>
 				<?php do_action( 'rss2_item' ); ?>
