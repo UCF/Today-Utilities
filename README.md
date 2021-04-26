@@ -17,7 +17,7 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ### 1.2.0 ###
 Enhancements:
-* Defined ACF field groups and fields in PHP which removes the need of the ACF export file.
+* Added a concise RSS feed to support the UCF Mobile App.
 
 ### 1.1.1 ###
 Enhancements:
