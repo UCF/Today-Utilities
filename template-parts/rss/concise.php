@@ -27,7 +27,7 @@ echo '<?xml version="1.0" encoding="' . get_option( 'blog_charset' ) . '"?' . '>
 		<?php do_action( 'rss2_head' ); ?>
 		<?php 
 		while( have_posts() ) : the_post();
-			$deck = get_field( 'post_header_deck', $post );
+			$deck = get_field( 'post_header_deck' );
 		?>
 			<item>
 				<title><?php the_title_rss(); ?></title>
