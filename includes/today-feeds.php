@@ -228,6 +228,5 @@ function add_concise_feed() {
 add_action( 'init', 'add_concise_feed' );
  
 function render_concise_feed() {
-    header( 'Content-Type: application/rss+xml' );
 	require_once TU_PLUGIN_DIR . 'template-parts/rss/concise.php';
 }
