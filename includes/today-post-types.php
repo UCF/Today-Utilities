@@ -129,5 +129,56 @@ if ( ! class_exists( 'UCF_Statement_PostType' ) ) {
 
 			return $args;
 		}
+
+		/**
+		 * Registers the ACF Fields for Statements
+		 * @author Cadie Stockman
+		 * @since 1.2.0
+		 * @return void
+		 */
+		public static function register_acf_fields() {
+			// Bail out if the function is missing.
+			if ( ! function_exists( 'acf_add_local_field_group' ) ) return;
+
+			// Create the field array.
+			$fields = array();
+
+			/**
+			 * Adds the author field
+			 */
+			$fields[] = array(
+				'key'               => 'field_6037ba9d455c6',
+				'label'             => 'Author',
+				'name'              => 'post_author_term',
+				'type'              => 'taxonomy',
+				'instructions'      => 'Choose an existing Author to assign to this Statement. Name, title, photo and bio information will be referenced from the Author that\'s selected.',
+				'required'          => 1,
+				'taxonomy'          => 'tu_author',
+				'field_type'        => 'select',
+				'save_terms'        => 1,
+				'load_terms'        => 1,
+				'return_format'     => 'object',
+			);
+
+			/**
+			 * Defines field group
+			 */
+			$field_group = array(
+				'key'                   => 'group_603516b56f247',
+				'title'                 => 'Statements Fields',
+				'fields'                => $fields,
+				'location'              => array(
+					array(
+						array(
+							'param'    => 'post_type',
+							'operator' => '==',
+							'value'    => 'ucf_statement',
+						),
+					),
+				),
+			);
+
+			acf_add_local_field_group( $field_group );
+		}
 	}
 }
