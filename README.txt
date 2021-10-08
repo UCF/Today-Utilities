@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 5.7
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 Requires PHP: 7.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -22,7 +22,7 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 == Changelog ==
 
-= 1.2.0 =
+= 1.3.0 =
 Enhancements:
 * Defined ACF field groups and fields in PHP.
 
