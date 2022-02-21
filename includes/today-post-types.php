@@ -119,7 +119,7 @@ if ( ! class_exists( 'UCF_Statement_PostType' ) ) {
 				'show_in_admin_bar'   => true,
 				'show_in_nav_menus'   => true,
 				'can_export'          => true,
-				'has_archive'         => false,
+				'has_archive'         => true,
 				'rewrite'             => array( 'slug' => $plural_lower ),
 				'delete_with_user'    => false,
 				'exclude_from_search' => false,
