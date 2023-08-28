@@ -26,6 +26,7 @@ require_once TU_PLUGIN_DIR . 'includes/today-options-gmucf.php';
 require_once TU_PLUGIN_DIR . 'includes/today-options-main-site-feed.php';
 require_once TU_PLUGIN_DIR . 'includes/today-feeds.php';
 require_once TU_PLUGIN_DIR . 'includes/today-revisions.php';
+require_once TU_PLUGIN_DIR . 'includes/today-resource-link-overrides.php';
 
 require_once TU_PLUGIN_DIR . 'api/today-custom-post-api.php';
 
