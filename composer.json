@@ -1,0 +1,8 @@
+{
+    "name": "ucf/today-utilities",
+    "description": "Feature and utility plugin for the UCF Today website.",
+    "type": "wordpress-plugin",
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}

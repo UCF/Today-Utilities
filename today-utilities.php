@@ -2,7 +2,7 @@
 /*
 Plugin Name: Today Utilities
 Description: Feature and utility plugin for the UCF Today website
-Version: 1.3.0
+Version: 1.3.1
 Author: UCF Web Communications
 License: GPL3
 GitHub Plugin URI: UCF/Today-Utilities
@@ -26,6 +26,7 @@ require_once TU_PLUGIN_DIR . 'includes/today-options-gmucf.php';
 require_once TU_PLUGIN_DIR . 'includes/today-options-main-site-feed.php';
 require_once TU_PLUGIN_DIR . 'includes/today-feeds.php';
 require_once TU_PLUGIN_DIR . 'includes/today-revisions.php';
+require_once TU_PLUGIN_DIR . 'includes/today-resource-link-overrides.php';
 
 require_once TU_PLUGIN_DIR . 'api/today-custom-post-api.php';
 
