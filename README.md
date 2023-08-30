@@ -15,6 +15,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.4.0 ###
+Enhancements:
+* Added tags to the taxonomy array for resource links.
+
 ### 1.3.1 ###
 Enhancements:
 * Added composer file.
