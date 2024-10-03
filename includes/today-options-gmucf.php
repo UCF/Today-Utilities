@@ -457,3 +457,22 @@ function tu_load_announcement_choices( $field ) {
 }
 
 add_filter( 'acf/load_field/name=gmucf_announcements', 'tu_load_announcement_choices' );
+
+if ( function_exists( 'pantheon_clear_edge_paths' ) ) {
+	function tu_on_options_page_save( $post_id, $menu_slug ) {
+		if ( $post_id === 'gmucf_announcements' ) {
+			pantheon_clear_edge_paths(
+				[
+					'/news/',
+					'/news/mail/',
+					'/gmucf/news/',
+					'/gmucf/news/mail/',
+					'/news/wp-json/ucf-news/v1/gmucf-email-options/',
+					'/news/wp-json/ucf-news/v1/external-stories/'
+				]
+			);
+		}
+	}
+
+	add_action( 'acf/options_page/save', 'tu_on_options_page_save', 10, 2 );
+}
