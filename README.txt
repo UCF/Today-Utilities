@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 6.1
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 Requires PHP: 7.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.5.0 =
+Enhancements:
+* Added cache clearing logic for the email builder.
 
 = 1.4.0 =
 Enhancements:

@@ -15,6 +15,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 ## Changelog ##
 
+### 1.5.0 ###
+Enhancements:
+* Added cache clearing logic for the email builder.
+
 ### 1.4.0 ###
 Enhancements:
 * Added tags to the taxonomy array for resource links.
