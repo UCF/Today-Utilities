@@ -2,7 +2,7 @@
 Contributors: ucfwebcom
 Requires at least: 4.9.7
 Tested up to: 6.1
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 Requires PHP: 7.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
@@ -21,6 +21,10 @@ Head over to the [Today Utilities wiki](https://github.com/UCF/Today-Utilities/w
 
 
 == Changelog ==
+
+= 1.5.1 = 
+Bug:
+* Replaced the preview button link to https://gmucf.cm.ucf.edu/news/mail/?no_cache=true
 
 = 1.5.0 =
 Enhancements:
