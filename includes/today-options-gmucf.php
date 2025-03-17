@@ -292,7 +292,7 @@ function tu_add_gmucf_options_page_fields() {
 	$preview_gmucf_email_fields[] = array(
 		'key'               => 'field_5bee321a8437d',
 		'type'              => 'message',
-		'message'           => '<p style="margin-top: 0;">Click the button below to open the GMUCF email in a new tab. This page must be updated in order to see the latest changes.</p><a href="https://gmucf.smca.ucf.edu/news/mail/?no_cache=true" target="_blank" style="background: #fc0; padding: 8px; color: #000; text-decoration: none; font-weight: bold; display: block; text-align: center;">Preview Email</a>',
+		'message'           => '<p style="margin-top: 0;">Click the button below to open the GMUCF email in a new tab. This page must be updated in order to see the latest changes.</p><a href="https://gmucf.cm.ucf.edu/news/mail/?no_cache=true" target="_blank" style="background: #fc0; padding: 8px; color: #000; text-decoration: none; font-weight: bold; display: block; text-align: center;">Preview Email</a>',
 		'new_lines'         => '',
 	);
 
